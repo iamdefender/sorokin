@@ -151,7 +151,6 @@ Fixed by changing to `random.randint(min(5, len(leaves)), min(10, len(leaves)))`
 Inspired by:
 - Vladimir Sorokin (the writer, not the script)
 - Dr. Frankenstein (the fictional surgeon)
-- Andrej Karpathy's README style (but make it *weird*)
 - The general human fascination with taking things apart
 
 ### License
