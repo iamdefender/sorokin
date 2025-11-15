@@ -156,7 +156,7 @@ Inspired by:
 
 ### License
 
-MIT. Do whatever you want. Dissect it. Mutate it. Reassemble it into something new. That's the whole point.
+GNU GPL 3.0. Free as in freedom. Dissect it. Mutate it. Reassemble it into something new. Share the mutations. That's the whole point.
 
 ---
 
