@@ -389,7 +389,7 @@ def reassemble_corpse(leaves: List[str]) -> str:
     result = [current]
     seen = {current.lower()}
 
-    target_len = random.randint(5, min(10, len(leaves)))
+    target_len = random.randint(min(5, len(leaves)), min(10, len(leaves)))
     for _ in range(target_len):
         options = bigrams.get(current.lower(), [])
         options = [w for w in options if w.lower() not in seen]
