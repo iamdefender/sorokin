@@ -1,0 +1,506 @@
+#!/usr/bin/env python3
+# sorokin.py — ruthless prompt autopsy
+#
+# Dedicated to the great russian writer Vladimir Sorokin.
+#
+# Usage:
+#   python sorokin.py "fuck this sentence"
+#   python sorokin.py              # REPL mode
+#
+# Motto:
+#   "Fuck the sentence. Keep the corpse."
+
+from __future__ import annotations
+
+import html
+import random
+import re
+import sqlite3
+import sys
+from collections import defaultdict
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import List, Dict, Tuple, Set
+import urllib.parse
+import urllib.request
+
+DB_PATH = Path("sorokin.sqlite")
+USER_AGENT = "Mozilla/5.0 (compatible; SorokinAutopsy/1.0)"
+MAX_INPUT_CHARS = 100
+MAX_WORDS = 6          # max core words to dissect
+MAX_DEPTH = 4          # recursion safety cap
+
+# Latin + extended + Cyrillic
+WORD_RE = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿА-Яа-яЁё]+")
+
+STOPWORDS = {
+    "the", "and", "to", "a", "in", "it", "of", "for", "on", "with", "as", "is", "at",
+    "by", "from", "or", "an", "be", "this", "that", "are", "was", "but", "not",
+    "i", "you", "he", "she", "they", "we",
+    "и", "в", "на", "но", "не", "это", "как", "что", "тот", "той", "то", "за",
+}
+
+
+@dataclass
+class Node:
+    """One word on the slab, plus its branching mutations."""
+    word: str
+    children: List["Node"] = field(default_factory=list)
+
+
+# ───────────────────────────
+# SQLite morgue
+# ───────────────────────────
+
+def init_db() -> None:
+    """Create tiny morgue tables if they don't exist yet."""
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS autopsy (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                prompt TEXT NOT NULL,
+                tree_text TEXT NOT NULL,
+                created REAL DEFAULT (strftime('%s','now'))
+            )
+        """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS word_memory (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                word TEXT NOT NULL,
+                related TEXT NOT NULL,
+                created REAL DEFAULT (strftime('%s','now'))
+            )
+        """)
+        conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_word_memory_word
+            ON word_memory(word)
+        """)
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def store_autopsy(prompt: str, tree_text: str) -> None:
+    """Save the full autopsy report for future horror."""
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        conn.execute(
+            "INSERT INTO autopsy(prompt, tree_text) VALUES (?, ?)",
+            (prompt, tree_text),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def store_word_relations(word: str, related: List[str]) -> None:
+    """Remember what we found around a word, like labeling jars in a basement."""
+    if not related:
+        return
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        conn.executemany(
+            "INSERT INTO word_memory(word, related) VALUES (?, ?)",
+            [(word.lower(), r) for r in related],
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def recall_word_relations(word: str, limit: int) -> List[str]:
+    """Recall previous mutations of a word from the morgue."""
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        rows = conn.execute(
+            """
+            SELECT related FROM word_memory
+            WHERE word = ?
+            ORDER BY id DESC
+            LIMIT ?
+            """,
+            (word.lower(), limit),
+        ).fetchall()
+    finally:
+        conn.close()
+    return [r[0] for r in rows]
+
+
+# ───────────────────────────
+# Tokenization & core selection
+# ───────────────────────────
+
+def tokenize(text: str) -> List[str]:
+    """Carve out tokens: only letters, no digits, no punctuation."""
+    return WORD_RE.findall(text)
+
+
+def select_core_words(tokens: List[str]) -> List[str]:
+    """
+    Pick the charged words to dissect.
+    Longer, rarer, earlier words get more weight + a bit of chaos.
+    """
+    if not tokens:
+        return []
+
+    lowered = [t.lower() for t in tokens]
+    scored: List[Tuple[float, str]] = []
+    seen = set()
+
+    for idx, t in enumerate(tokens):
+        lw = t.lower()
+        if len(lw) < 2:
+            continue
+        if lw in STOPWORDS:
+            continue
+        if lw in seen:
+            continue
+        seen.add(lw)
+
+        freq = lowered.count(lw)
+        length_score = len(lw) ** 1.2
+        rarity_bonus = 1.0 / (1.0 + freq)
+        position_bonus = 1.2 if idx == 0 else 1.0
+        jitter = random.uniform(0.9, 1.1)
+
+        weight = length_score * rarity_bonus * position_bonus * jitter
+        scored.append((weight, t))
+
+    if not scored:
+        return tokens[:MAX_WORDS]
+
+    scored.sort(reverse=True, key=lambda x: x[0])
+    chosen = [w for _, w in scored[:MAX_WORDS]]
+    return chosen
+
+
+# ───────────────────────────
+# Phonetic similarity — sound-based mutations
+# ───────────────────────────
+
+def phonetic_fingerprint(word: str) -> str:
+    """
+    Crude phonetic hash: reduce word to consonant skeleton + vowel pattern.
+    Not linguistically rigorous — just enough to catch alliteration/rhyme.
+    """
+    lw = word.lower()
+    consonants = re.sub(r'[aeiouаеёиоуыэюя]', '', lw)
+    vowels = re.sub(r'[^aeiouаеёиоуыэюя]', '', lw)
+    return consonants[:3] + vowels[-2:]
+
+
+def find_phonetic_neighbors(word: str, candidate_pool: List[str], limit: int) -> List[str]:
+    """
+    Return words from candidate_pool that sound similar to word.
+    Similarity = shared phonetic fingerprint prefix or suffix.
+    """
+    if limit <= 0:
+        return []
+
+    fp = phonetic_fingerprint(word)
+    if len(fp) < 2:
+        return []
+
+    scored: List[Tuple[int, str]] = []
+    lw = word.lower()
+
+    for cand in candidate_pool:
+        lc = cand.lower()
+        if lc == lw:
+            continue
+        cfp = phonetic_fingerprint(cand)
+        if len(cfp) < 2:
+            continue
+
+        score = 0
+        if fp[:2] == cfp[:2]:
+            score += 2
+        if len(fp) >= 2 and len(cfp) >= 2 and fp[-2:] == cfp[-2:]:
+            score += 2
+        if score == 0:
+            continue
+
+        scored.append((score, cand))
+
+    scored.sort(reverse=True, key=lambda x: x[0])
+    return [w for _, w in scored[:limit]]
+
+
+# ───────────────────────────
+# Internet scraping: dirty synonyms
+# ───────────────────────────
+
+_html_cache: Dict[str, str] = {}
+
+
+def _fetch_google_snippets(query: str) -> str:
+    """
+    Scrapes the web like a raccoon in a trash can.
+    Meaning is irrelevant. Resonance is king.
+    """
+    if query in _html_cache:
+        return _html_cache[query]
+
+    try:
+        url = f"https://www.google.com/search?q={urllib.parse.quote(query)}&num=3"
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=6) as resp:
+            html_text = resp.read().decode("utf-8", "ignore")
+    except Exception:
+        html_text = ""
+
+    _html_cache[query] = html_text
+    return html_text
+
+
+def _extract_candidate_words(html_text: str) -> List[str]:
+    """Strip tags, keep charged co-occurrences, discard dignity."""
+    if not html_text:
+        return []
+
+    stripped = re.sub(r"<[^>]+>", " ", html_text)
+    stripped = html.unescape(stripped)
+    words = WORD_RE.findall(stripped)
+
+    counts: Dict[str, int] = {}
+    for w in words:
+        lw = w.lower()
+        if len(lw) < 3:
+            continue
+        if lw in STOPWORDS:
+            continue
+        counts[lw] = counts.get(lw, 0) + 1
+
+    scored: List[Tuple[float, str]] = []
+    for w, freq in counts.items():
+        score = (min(len(w) / 10.0, 1.5)) * (1.0 / (1.0 + freq))
+        scored.append((score, w))
+
+    scored.sort(reverse=True, key=lambda x: x[0])
+    return [w for _, w in scored]
+
+
+def lookup_branches_for_word(word: str, width: int, all_candidates: List[str]) -> List[str]:
+    """
+    Return EXACTLY `width` branches for a word.
+    Order of preference:
+      1) previous mutations from SQLite
+      2) phonetic neighbors from candidate pool
+      3) fresh trash from Google
+      4) synthetic placeholders if all else fails
+    """
+    width = max(1, width)
+
+    # 1) Memory first
+    mem = recall_word_relations(word, width)
+    if len(mem) >= width:
+        return mem[:width]
+
+    # 2) Phonetic neighbors
+    remaining = width - len(mem)
+    phonetic = find_phonetic_neighbors(word, all_candidates, remaining)
+    filtered = mem + phonetic
+    if len(filtered) >= width:
+        return filtered[:width]
+
+    # 3) Google synonyms
+    html_text = _fetch_google_snippets(f"{word} synonym")
+    candidates = _extract_candidate_words(html_text)
+
+    if not candidates:
+        html_text = _fetch_google_snippets(word)
+        candidates = _extract_candidate_words(html_text)
+
+    seen: Set[str] = {w.lower() for w in filtered}
+    lw = word.lower()
+
+    for c in candidates:
+        lc = c.lower()
+        if lc == lw:
+            continue
+        if lc in seen:
+            continue
+        seen.add(lc)
+        filtered.append(c)
+        if len(filtered) >= width:
+            break
+
+    # 4) Pad with placeholders if the web was boring
+    while len(filtered) < width:
+        placeholder = f"{lw}_x{len(filtered) + 1}"
+        filtered.append(placeholder)
+
+    store_word_relations(word, filtered)
+    return filtered
+
+
+# ───────────────────────────
+# Tree building
+# ───────────────────────────
+
+def build_tree_for_word(word: str, width: int, depth: int, all_candidates: List[str]) -> Node:
+    """
+    Recursively mutate a word into a branching freak.
+    width = fan-out, depth = how far down we keep mutating.
+    """
+    node = Node(word=word)
+    if depth <= 1:
+        return node
+
+    first_level = lookup_branches_for_word(word, width, all_candidates)
+
+    next_depth = depth - 1
+    for b in first_level:
+        child = build_tree_for_word(b, width=width, depth=next_depth, all_candidates=all_candidates)
+        node.children.append(child)
+
+    return node
+
+
+def collect_leaves(node: Node) -> List[str]:
+    """Gather all leaf words from the tree — the final mutated fragments."""
+    if not node.children:
+        return [node.word]
+    leaves: List[str] = []
+    for ch in node.children:
+        leaves.extend(collect_leaves(ch))
+    return leaves
+
+
+# ───────────────────────────
+# Frankenstein reassembly — markov-style corpse
+# ───────────────────────────
+
+def reassemble_corpse(leaves: List[str]) -> str:
+    """
+    Build a new "sentence" from leaf words using a simple bigram chain.
+    If leaves < 3, just shuffle and return.
+    """
+    if len(leaves) < 3:
+        random.shuffle(leaves)
+        return " ".join(leaves)
+
+    bigrams: Dict[str, List[str]] = defaultdict(list)
+    for i in range(len(leaves) - 1):
+        bigrams[leaves[i].lower()].append(leaves[i + 1])
+
+    current = random.choice(leaves)
+    result = [current]
+    seen = {current.lower()}
+
+    target_len = random.randint(5, min(10, len(leaves)))
+    for _ in range(target_len):
+        options = bigrams.get(current.lower(), [])
+        options = [w for w in options if w.lower() not in seen]
+
+        if not options:
+            unused = [w for w in leaves if w.lower() not in seen]
+            if not unused:
+                break
+            current = random.choice(unused)
+        else:
+            current = random.choice(options)
+
+        result.append(current)
+        seen.add(current.lower())
+
+    return " ".join(result)
+
+
+# ───────────────────────────
+# ASCII rendering — vertical scalpel
+# ───────────────────────────
+
+def render_node(node: Node, prefix: str, is_last: bool) -> List[str]:
+    """Render one node and its descendants as a clean morgue diagram."""
+    connector = "└─ " if is_last else "├─ "
+    lines = [f"{prefix}{connector}{node.word}"]
+
+    if node.children:
+        new_prefix = prefix + ("   " if is_last else "│  ")
+        for i, ch in enumerate(node.children):
+            last = (i == len(node.children) - 1)
+            lines.extend(render_node(ch, new_prefix, last))
+
+    return lines
+
+
+def render_autopsy(prompt: str, words: List[str], trees: List[Node]) -> str:
+    """Stitch together the full autopsy report as a single text block."""
+    out: List[str] = []
+    out.append(prompt.strip())
+    out.append("")
+
+    for w, t in zip(words, trees):
+        out.append(w)
+        for i, ch in enumerate(t.children):
+            last = (i == len(t.children) - 1)
+            out.extend(render_node(ch, "  ", last))
+        out.append("")
+
+    all_leaves: List[str] = []
+    for t in trees:
+        all_leaves.extend(collect_leaves(t))
+
+    if all_leaves:
+        corpse = reassemble_corpse(all_leaves)
+        out.append("AUTOPSY RESULT:")
+        out.append(f"  {corpse}")
+        out.append("")
+
+    out.append("— Sorokin")
+    return "\n".join(out)
+
+
+# ───────────────────────────
+# Main pipeline
+# ───────────────────────────
+
+def sorokin_autopsy(prompt: str) -> str:
+    """Main entry: take a prompt, return its dissection."""
+    short = prompt.strip()[:MAX_INPUT_CHARS]
+    tokens = tokenize(short)
+    if not tokens:
+        return "Nothing to dissect.\n\n— Sorokin"
+
+    core = select_core_words(tokens)
+
+    k = max(1, min(len(core), MAX_DEPTH))
+    width = k
+    depth = k
+
+    all_candidates = tokens.copy()
+
+    trees = [build_tree_for_word(w, width, depth, all_candidates) for w in core]
+    report = render_autopsy(short, core, trees)
+    store_autopsy(short, report)
+    return report
+
+
+def repl() -> None:
+    """Endless dissection loop until the operator gives up."""
+    print("S̴̥̔o̴͎̿r̶̘̒o̸̺̽k̵̻̈́i̷͖͝ñ̶͕ online. Type a prompt.")
+    while True:
+        try:
+            prompt = input("> ").strip()
+            if not prompt:
+                continue
+            print(sorokin_autopsy(prompt))
+            print()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting autopsy room.")
+            break
+
+
+def main(argv: List[str]) -> None:
+    init_db()
+    if len(argv) > 1:
+        prompt = " ".join(argv[1:])
+        print(sorokin_autopsy(prompt))
+    else:
+        repl()
+
+
+if __name__ == "__main__":
+    main(sys.argv)
