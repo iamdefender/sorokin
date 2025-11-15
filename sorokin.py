@@ -346,8 +346,16 @@ def _extract_candidate_words(html_text: str) -> List[str]:
     if not html_text:
         return []
 
-    # First unescape HTML entities, then strip tags with proper spacing
-    stripped = html.unescape(html_text)
+    # Remove script and style blocks completely (they add noise)
+    stripped = re.sub(r'<script[^>]*>.*?</script>', ' ', html_text, flags=re.DOTALL | re.IGNORECASE)
+    stripped = re.sub(r'<style[^>]*>.*?</style>', ' ', stripped, flags=re.DOTALL | re.IGNORECASE)
+
+    # First unescape HTML entities
+    stripped = html.unescape(stripped)
+
+    # Remove non-semantic tags (noscript, meta, etc)
+    stripped = re.sub(r'<(?:noscript|meta|link|base|title)[^>]*>', ' ', stripped, flags=re.IGNORECASE)
+
     # Add spaces around tags to prevent word concatenation
     stripped = re.sub(r"<[^>]+>", " ", stripped)
     # Split camelCase words
@@ -358,19 +366,44 @@ def _extract_candidate_words(html_text: str) -> List[str]:
     stripped = re.sub(r"\s+", " ", stripped)
     words = WORD_RE.findall(stripped)
 
+    def _looks_like_real_word(word: str) -> bool:
+        """Filter out gibberish - real words have some vowels and not all same consonants."""
+        vowels = "aeiouаеёиоуыэюя"
+        vowel_count = sum(1 for c in word if c in vowels)
+        consonant_count = len(word) - vowel_count
+
+        # Must have at least some vowels
+        if vowel_count < max(1, len(word) // 4):
+            return False
+
+        # Check for repeating patterns (gibberish detector)
+        # e.g., "xyzxyzxyz" or "tttttt" are probably garbage
+        if len(word) >= 6:
+            # Check if it's mostly repeating 1-2 char patterns
+            for pattern_len in [1, 2, 3]:
+                pattern = word[:pattern_len]
+                if all(word[i:i+pattern_len] == pattern for i in range(0, len(word), pattern_len)):
+                    return False
+
+        return True
+
     counts: Dict[str, int] = {}
     for w in words:
         lw = w.lower()
-        if len(lw) < 3:
+        if len(lw) < 4:  # Increased from 3
             continue
         if lw in STOPWORDS:
             continue
         if lw in HTML_ARTIFACTS:
             continue
+        if not _looks_like_real_word(lw):
+            continue
         counts[lw] = counts.get(lw, 0) + 1
 
     scored: List[Tuple[float, str]] = []
     for w, freq in counts.items():
+        # Prefer less frequent words (they're more interesting)
+        # and reasonably sized words
         score = (min(len(w) / 10.0, 1.5)) * (1.0 / (1.0 + freq))
         scored.append((score, w))
 
