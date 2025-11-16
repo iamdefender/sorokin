@@ -12,7 +12,7 @@
 
 `sorokin.py` is a ~1330-line Python script that takes your innocent prompts, tears them apart like a psychopathic linguist, builds a recursive tree of semantic mutations, and then—like Dr. Frankenstein having a particularly creative day—reassembles the corpse into something *new*.
 
-Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*. Think of it as Andrej Karpathy's cheerful hacking energy duct-taped to Sorokin's brutal scalpel, all narrated by a manic gremlin that sounds suspiciously like me.
+Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*.
 
 ### Exhibit: Maximum Autopsy Tree
 
