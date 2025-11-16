@@ -496,17 +496,39 @@ def lookup_branches_for_word(
         if len(filtered) >= width:
             break
 
-    # 4) Fallback: if still need more, just repeat the word (minimal mutation)
-    # Better to have shallow trees than synthetic garbage
+    # 4) Fallback: if still not enough, use other words from all_candidates
+    # This ensures we always have width branches (tree structure requirement)
+    # Note: Don't check global_used here - we need width branches even if they're reused
+    seen_local = {w.lower() for w in filtered}  # Only check within this lookup
     remaining = width - len(filtered)
-    if remaining > 0 and lw not in [f.lower() for f in filtered]:
-        filtered.append(word)  # Add original if not present
+    if remaining > 0:
+        for candidate in all_candidates:
+            if candidate.lower() not in seen_local and candidate.lower() != lw:
+                filtered.append(candidate)
+                seen_local.add(candidate.lower())
+                remaining -= 1
+                if remaining <= 0:
+                    break
+
+    # Final fallback: add original word if still need more
+    remaining = width - len(filtered)
+    if remaining > 0 and lw not in seen_local:
+        filtered.append(word)
+
+    # Deduplicate while preserving order
+    seen_dedup = set()
+    deduped = []
+    for w in filtered:
+        lw_check = w.lower()
+        if lw_check not in seen_dedup:
+            deduped.append(w)
+            seen_dedup.add(lw_check)
 
     # Update global used set
-    global_used.update(w.lower() for w in filtered)
+    global_used.update(w.lower() for w in deduped)
 
-    store_word_relations(word, filtered)
-    return filtered
+    store_word_relations(word, deduped)
+    return deduped[:width]  # Return exactly width or less
 
 
 # ───────────────────────────
@@ -578,12 +600,8 @@ def build_tree_for_word(
 
     first_level = lookup_branches_for_word(word, width, all_candidates, global_used)
 
-    # If all branches are just the same word repeating, stop here
-    # (No point in creating tree of identical words)
-    unique_branches = [b for b in first_level if b.lower() != word.lower()]
-    if not unique_branches:
-        return node
-
+    # Build children even if branches include the word itself
+    # (Ensures all words have at least depth=1 tree structure for rendering)
     next_depth = depth - 1
     for b in first_level:
         child = build_tree_for_word(b, width=width, depth=next_depth, all_candidates=all_candidates, global_used=global_used)
