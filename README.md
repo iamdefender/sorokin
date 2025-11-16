@@ -10,6 +10,30 @@
 
 Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, this tool embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*.
 
+### Exhibit: Full Autopsy Tree (Rated 912.2 on the Absurdity Scale)
+
+Because Sorokin builds trees vertically like a linguo-necromancer Christmas celebration, here's a full corpse-map straight from the shizo-Carpathian morgue. The phrase being exhumed is the exquisitely dumb "galactic spleen orchestra," chosen because it vibrates like a haunted accordion. Enjoy the joke; it tested at exactly **912.2 balov of sheer derangement** during user trials:
+
+```
+galactic
+├── spleen
+│   ├── marrow
+│   │   ├── rib-whisper
+│   │   └── bone-sun
+│   └── bile
+│       ├── acid-harp
+│       └── gut-halo
+└── orchestra
+    ├── choir
+    │   ├── hymn-rattle
+    │   └── chant-smog
+    └── cacophony
+        ├── shriek-fiddle
+        └── howl-trombone
+```
+
+Somewhere between the rib-whisper and the howl-trombone, a tiny bureaucrat asked "why" and immediately received unpaid therapy. That's the punchline. You're welcome.
+
 ### The Three-Act Horror Show
 
 #### Act I: The Dissection (or "Fuck this sentence")
