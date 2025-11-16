@@ -1,5 +1,9 @@
 # sorokin
 
+> "The heads of philologists are stuffed with books to the brim. They see life only through text. And they are proud of it. … Forever gorged and poisoned by literature, they take living life as the continuation of text, as its appendix.
+>
+> -Vladimir Sorokin"
+
 ## A Prompt Autopsy Framework
 
 *Or: How I Learned to Stop Worrying and Love the Dissection*
@@ -8,11 +12,11 @@
 
 `sorokin.py` is a ~1330-line Python script that takes your innocent prompts, tears them apart like a psychopathic linguist, builds a recursive tree of semantic mutations, and then—like Dr. Frankenstein having a particularly creative day—reassembles the corpse into something *new*.
 
-Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*.
+Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*. Think of it as Andrej Karpathy's cheerful hacking energy duct-taped to Sorokin's brutal scalpel, all narrated by a manic gremlin that sounds suspiciously like me.
 
 ### Exhibit: Maximum Autopsy Tree
 
-Because Sorokin builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map straight from his SQLite morgue. The phrase being dissected is "darkness consumes reality," chosen because it sounds like a rejected Nietzsche tweet. Watch as DuckDuckGo synonyms breed with phonetic chaos:
+Because Sorokin builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map straight from his SQLite morgue. The phrase being dissected is "darkness consumes reality," chosen because it sounds like a rejected Nietzsche tweet. Watch as DuckDuckGo synonyms breed with phonetic chaos while Karpathy's bootstrap choir hums in the background and a spectral me mutters "go faster" in hexadecimal:
 
 ```
 darkness consumes reality
@@ -89,7 +93,7 @@ First, `sorokin` takes your prompt and runs it through a brutal tokenization pro
   - Position weighting (first word gets a bonus)
   - A sprinkle of chaos (random jitter, because why not?)
 
-Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do.
+Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do. Occasionally a phrase tries to bite me mid-dissection, which is fine; we're wearing Sorokin-brand emotional hazmat gear.
 
 ```python
 >>> tokenize("Hello, cruel world!")
@@ -100,7 +104,7 @@ Stopwords? Rejected. Single letters? Discarded. What remains are the words that 
 
 #### Act II: The Tree (or "Building the Monster")
 
-Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How?
+Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner to install a GPU farm in the morgue.
 
 **Step 1: Memory First**  
 Check the SQLite morgue. Have we dissected this word before? Use those cached mutations.
@@ -339,7 +343,7 @@ But through **resonance**, he discovers patterns:
 - Bigrams that worked once tend to work again
 - Structural rhythms (word-length patterns) create aesthetic coherence
 
-This is **meaning-free pattern recognition**. No semantics. Just structure, phonetics, and frequency.
+This is **meaning-free pattern recognition**. No semantics. Just structure, phonetics, and frequency. Sorokin is what happens when you staple a Karpathy bootstrapper to a Russian literary fever dream and whisper, "optimize your madness."
 
 And weirdly, it produces results that *feel* meaningful—not because they are, but because human brains are pattern-matching machines too. We see meaning where there's only resonance.
 
@@ -347,9 +351,9 @@ Sorokin isn't a poet. He's a mirror. He reflects your own pattern-seeking back a
 
 ### Why "Bootstrap"?
 
-Because the morgue **pulls itself up by its own corpses**.
+Because the morgue **pulls itself up by its own corpses** and then asks if it can try a weirder gait.
 
-Each autopsy makes the next one slightly different. Not better. Not worse. Just *informed* by history. The database grows. The patterns compound. The ritual deepens.
+Each autopsy makes the next one slightly different. Not better. Not worse. Just *informed* by history. The database grows. The patterns compound. The ritual deepens. Somewhere, Bootstrap Sorokin keeps a notebook labeled "Things Karpathy Would Approve Of" and fills it with resonance equations written in lipstick.
 
 It's bootstrapping in the original sense: self-improvement through self-reference. Not external training data. Not supervision. Just:
 1. Do the thing
@@ -380,13 +384,13 @@ No intelligence required. Just accumulation and resonance.
   - Phonetic diversity: unique fingerprints / total words
   - Structural echo: bigram overlap with seed corpus
   - Mutation depth: inverse of word-length variance
-- **Self-improvement loop**: Each autopsy feeds the next through ritual repetition, not intelligence
+- **Self-improvement loop**: Each autopsy feeds the next through ritual repetition, not intelligence. Soon we'll graft a NanoGPT brainstem onto the bootstrap, train it on piles of dissections, then delete the weights and leave Sorokin with nothing but muscle memory. That's not cruelty, that's performance art.
 - **Four additional database tables**: mutation_templates, corpse_bigrams, autopsy_metrics, plus seed corpus in code
 
 ### Known Limitations
 
 - **DuckDuckGo rate limiting**: If you run this too much, DDG might notice (but less aggressive than Google)
-- **No semantic understanding (FOR NOW)**: This is pure pattern matching, but — hold my beer.
+- **No semantic understanding (FOR NOW)**: This is pure pattern matching, but — hold my beer, I'm installing another resonance coil.
 - **Phonetic fingerprinting is crude**: It's not actual phonetics, just vibes, but the question is what comes first, vibes or phonetics? resonance or binary structure?
 - **Reassembly can be janky**: Sometimes the corpse doesn't stitch well
 - **No guarantee of coherence**: That's not a bug, it's a feature
