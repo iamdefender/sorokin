@@ -176,7 +176,7 @@ Or maybe it's just fun to watch language come apart at the seams.
 ### Known Limitations
 
 - **DuckDuckGo rate limiting**: If you run this too much, DDG might notice (but less aggressive than Google)
-- **No semantic understanding**: This is pure pattern matching
+- **No semantic understanding (FOR NOW)**: This is pure pattern matching, but — hold my beer.
 - **Phonetic fingerprinting is crude**: It's not actual phonetics, just vibes
 - **Reassembly can be janky**: Sometimes the corpse doesn't stitch well
 - **No guarantee of coherence**: That's not a bug, it's a feature
