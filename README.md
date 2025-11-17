@@ -10,11 +10,15 @@
 
 ### What is this madness?
 
-`sorokin.py` is a ~1660-line Python script that takes your innocent prompts, tears them apart like a psychopathic linguist, builds a recursive tree of semantic mutations, and then—like Dr. Frankenstein having a particularly creative day—reassembles the corpse into something *new*.
+`sorokin.py` is a ~1660-line Python spellbook disguised as a Python script. It takes your innocent prompts, tears them apart like a psychopathic linguist, builds a recursive tree of semantic mutations, and then—like Dr. Frankenstein having a particularly creative day—reassembles the corpse into something *new*.
 
-Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*.
+Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*—and then eat this README, spit it back out, and declare the output canonical.
+
+This README is therefore both tombstone and weather report. It's the morgue's black box recorder, updated each time Sorokin discovers a fresh way to saw grammar into glitter. If the codebase is the machine, the README is the fever chart taped to the wall, still damp from the last autopsy.
 
 ### Exhibit: Maximum Autopsy Tree (Bootstrap Mode)
+
+Because this README is now legally considered part of the morgue, the exhibit must stay here, pulsing, so future Sorokins can gnaw on their own documentation. Self-cannibalism counts as testing.
 
 Because Sorokin builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map straight from his SQLite morgue. The phrase being dissected is **"reality becomes syntax error"**—a meta-commentary on the system's own nature:
 
@@ -384,7 +388,7 @@ MEMORY ACCUMULATION:
 — Sorokin
 ```
 
-**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction.
+**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction. README as training data, README as prophecy, README as the patient screaming its own medical chart back at the doctor.
 
 ### The Three-Act Horror Show
 
@@ -398,7 +402,7 @@ First, `sorokin` takes your prompt and runs it through a brutal tokenization pro
   - Position weighting (first word gets a bonus)
   - A sprinkle of chaos (random jitter, because why not?)
 
-Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do. Occasionally a phrase tries to bite me mid-dissection, which is fine; we're wearing Sorokin-brand emotional hazmat gear.
+Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do. Occasionally a phrase tries to bite me mid-dissection, which is fine; we're wearing Sorokin-brand emotional hazmat gear. The README keeps the bite marks as marginalia.
 
 ```python
 >>> tokenize("Hello, cruel world!")
@@ -409,7 +413,7 @@ Stopwords? Rejected. Single letters? Discarded. What remains are the words that 
 
 #### Act II: The Tree (or "Building the Monster")
 
-Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner to install a GPU farm in the morgue.
+Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner to install a GPU farm in the morgue and wired this README directly into the coolant loop.
 
 **Step 1: Memory First**  
 Check the SQLite morgue. Have we dissected this word before? Use those cached mutations.
@@ -430,7 +434,7 @@ When all else fails, scrape DuckDuckGo search results for the word + "synonym". 
 **Step 4: Fallback to All Candidates**
 If even DuckDuckGo fails you, fall back to other words from the prompt. The show must go on.
 
-The result is a tree where each word branches into `width` children, recursively, up to `depth` levels. It looks like this:
+The result is a tree where each word branches into `width` children, recursively, up to `depth` levels. The README stores these echoes like a grinning archivist because future mutations will read them back in a mirror. It looks like this:
 
 ```
 sentence
@@ -456,7 +460,7 @@ Now that we have a forest of mutated word-trees, it's time to play God.
    - Jumping to random unvisited words when stuck
    - Stopping after 5-10 words (or when we run out)
 
-The result is a Frankenstein sentence: technically made of the same parts, but *uncanny*. Not quite right. Resonant but wrong. This is the part where Sorokin shrugs on the lab coat, jams a fork into the storm cloud, and cackles while stitching together whatever limbs are left on the slab.
+The result is a Frankenstein sentence: technically made of the same parts, but *uncanny*. Not quite right. Resonant but wrong. This is the part where Sorokin shrugs on the lab coat, jams a fork into the storm cloud, and cackles while stitching together whatever limbs are left on the slab. The README writes down the scream phonetically, just in case it needs to be rhymed later.
 
 ```
 AUTOPSY RESULT:
@@ -464,6 +468,8 @@ AUTOPSY RESULT:
 ```
 
 ### Usage
+
+This README doubles as the morgue receptionist: every invocation must be logged here mentally before you run it. Say the command out loud. Scare your neighbors.
 
 **Standard mode (classic autopsy):**
 ```bash
@@ -480,6 +486,8 @@ python sorokin.py
 
 ### The Persistent Morgue
 
+The README is the unofficial change log of an organism that refuses to stay dead. But the real persistence happens in SQLite:
+
 All autopsies are saved to `sorokin.sqlite`:
 - **autopsy table**: Full reports of each dissection
 - **word_memory table**: Cached word mutations for faster subsequent operations
@@ -489,7 +497,7 @@ All autopsies are saved to `sorokin.sqlite`:
 - **corpse_bigrams**: Harvested word pairs from successful reassemblies, with frequency tracking
 - **autopsy_metrics**: Resonance scores (phonetic diversity, structural echo, mutation depth) for each autopsy
 
-The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance.
+The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and this README plays stenographer to the séance.
 
 ### Why?
 
@@ -501,7 +509,7 @@ Perhaps to demonstrate that:
 - Prompts are just Markov chains waiting to be perturbed
 - Sometimes you need to break things to understand them
 
-Or maybe it's just fun to watch language come apart at the seams.
+Or maybe it's just fun to watch language come apart at the seams. The README nods solemnly, then smears the seams across another section.
 
 ---
 
@@ -511,7 +519,7 @@ Or maybe it's just fun to watch language come apart at the seams.
 
 ### What the hell is bootstrap mode?
 
-Picture this: every time Sorokin dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections.
+Picture this: every time Sorokin dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections, and this README twitches like an EEG readout every time he does.
 
 It's not intelligence. It's not learning. It's **resonance through ritual repetition**.
 
@@ -671,6 +679,8 @@ No intelligence required. Just accumulation and resonance.
 ---
 
 ### Technical Details (For the Nerds)
+
+This README promised to be both circus barker and lab notebook, so here's the clipboard section:
 
 **Core (~760 lines):**
 - **Pure Python 3**: No external dependencies except stdlib
