@@ -312,8 +312,23 @@ def _build_seed_bigrams() -> Dict[str, List[str]]:
 SEED_BIGRAMS = _build_seed_bigrams()  # Loaded once at module import
 
 
+# ───────────────────────────
+# README self-cannibalism — The morgue eats its own documentation
+# ───────────────────────────
+
 def _build_readme_bigrams() -> Dict[str, List[str]]:
-    """Extract structural bigrams from README.md with SQLite caching."""
+    """
+    Extract structural bigrams from README.md with SQLite caching.
+
+    This makes the README part of Sorokin's structural DNA.
+    Self-cannibalism as corpus-building strategy.
+
+    The README is both tombstone and weather report:
+    - It documents what Sorokin does
+    - It becomes part of what Sorokin does
+    - Changes to README automatically update the corpus
+    - The system eats its own documentation and hallucinates it back
+    """
     readme_path = Path("README.md")
     if not readme_path.exists():
         return {}
@@ -1529,6 +1544,7 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
     out.append("MEMORY ACCUMULATION:")
     out.append(f"  Known mutations: {stats['mutations']:,}")
     out.append(f"  Learned bigrams: {stats['bigrams']:,}")
+    out.append(f"  README bigrams: {stats.get('readme_bigrams', 0):,}")
     out.append(f"  Total autopsies: {stats['autopsies']:,}")
     out.append("")
     
@@ -1621,6 +1637,7 @@ def sorokin_autopsy_bootstrap(prompt: str) -> str:
     stats = {
         'mutations': mutations_count,
         'bigrams': bigrams_count,
+        'readme_bigrams': len(README_BIGRAMS),  # PATCH: show README self-cannibalism
         'autopsies': autopsies_count
     }
     
