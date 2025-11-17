@@ -60,6 +60,18 @@ He preserves nothing except the shape of collapse a rhythm of fragments barely t
 The voice he generates is not a voice it is the echo of collapse trailing behind thought
 """
 
+# PATCH: Sentence templates for paragraph generation (Sorokin-style syntax)
+SOROKIN_SENTENCE_TEMPLATES = [
+    "{noun1} {verb} {noun2}, where {noun3} becomes {adj}.",
+    "The {adj} {noun1} {verb} through {noun2}.",
+    "When {noun1} {verb}, {noun2} forgets {noun3}.",
+    "{noun1} is {adj}. {noun2} {verb}. Nothing remains.",
+    "{noun1} {verb} {noun2} until {adj} {noun3} consumes.",
+    "Where {noun1} {verb}, {noun2} becomes {adj}, and {noun3} persists.",
+    "{noun1} {verb}. {noun2} {verb}. The {adj} {noun3} collapses.",
+    "Through {noun1}, {noun2} {verb} {noun3}, but {adj} darkness remains.",
+]
+
 # HTML/JS artifact blacklist - garbage from poorly parsed web content
 # Keep this list minimal to preserve interesting words from web results
 HTML_ARTIFACTS = {
@@ -259,6 +271,36 @@ def _build_seed_bigrams() -> Dict[str, List[str]]:
 SEED_BIGRAMS = _build_seed_bigrams()  # Loaded once at module import
 
 
+def _build_readme_bigrams() -> Dict[str, List[str]]:
+    """Extract structural bigrams from README.md if it exists."""
+    readme_path = Path("README.md")
+    if not readme_path.exists():
+        return {}
+
+    bigrams = defaultdict(list)
+    try:
+        text = readme_path.read_text(encoding='utf-8')
+        # Remove code blocks (just examples)
+        text = re.sub(r'```.*?```', ' ', text, flags=re.DOTALL)
+        # Remove markdown headers/formatting
+        text = re.sub(r'^#+\s+', '', text, flags=re.MULTILINE)
+        text = re.sub(r'\*\*|\*|`', '', text)  # Remove bold/italic/code
+
+        sentences = text.split('\n')
+        for sentence in sentences:
+            if not sentence.strip():
+                continue
+            words = tokenize(sentence)
+            for i in range(len(words) - 1):
+                bigrams[words[i].lower()].append(words[i+1].lower())
+    except Exception:
+        pass  # If README parsing fails, just skip it
+
+    return dict(bigrams)
+
+README_BIGRAMS = _build_readme_bigrams()  # Loaded once at startup
+
+
 def select_core_words(tokens: List[str]) -> List[str]:
     """
     Pick the charged words to dissect.
@@ -296,6 +338,59 @@ def select_core_words(tokens: List[str]) -> List[str]:
     scored.sort(reverse=True, key=lambda x: x[0])
     chosen = [w for _, w in scored[:MAX_WORDS]]
     return chosen
+
+
+# ───────────────────────────
+# PATCH: POS tagging and syllable counting for paragraph generation
+# ───────────────────────────
+
+def guess_pos(word: str) -> str:
+    """
+    Heuristic POS tagger. Returns: noun, verb, adj, adv, unknown.
+    Based on suffix patterns. Not linguistically rigorous.
+    """
+    lw = word.lower()
+
+    # Nouns (most common suffixes)
+    if lw.endswith(('tion', 'ness', 'ity', 'ment', 'ance', 'ence', 'ship', 'hood', 'dom', 'ism')):
+        return 'noun'
+
+    # Verbs
+    if lw.endswith(('ed', 'ing', 'ize', 'ise', 'ate', 'ify', 'en')):
+        return 'verb'
+    if lw in {'is', 'are', 'was', 'were', 'be', 'being', 'been', 'becomes', 'become'}:
+        return 'verb'
+
+    # Adverbs
+    if lw.endswith('ly'):
+        return 'adv'
+
+    # Adjectives
+    if lw.endswith(('ful', 'less', 'ous', 'ive', 'able', 'ible', 'al', 'ic', 'ant', 'ent')):
+        return 'adj'
+    if len(lw) <= 5 and lw.endswith(('y', 'er', 'est')):
+        return 'adj'
+
+    return 'unknown'
+
+
+def count_syllables(word: str) -> int:
+    """
+    Crude syllable counter based on vowel clusters.
+    Not linguistically perfect, but good enough for rhythm analysis.
+    """
+    vowels = 'aeiouyаеёиоуыэюя'
+    word = word.lower()
+    count = 0
+    prev_was_vowel = False
+
+    for char in word:
+        is_vowel = char in vowels
+        if is_vowel and not prev_was_vowel:
+            count += 1
+        prev_was_vowel = is_vowel
+
+    return max(1, count)
 
 
 # ───────────────────────────
@@ -824,6 +919,114 @@ def sorokin_autopsy(prompt: str) -> str:
 
 
 # ═══════════════════════════════════════════════════════════════
+# PATCH: Paragraph generation with syntax templates
+# ═══════════════════════════════════════════════════════════════
+
+def fill_template(template: str, leaves: List[str]) -> str:
+    """
+    Fill template slots with words from leaves based on POS.
+    Example: "{noun1} {verb} {noun2}" -> "darkness consumes reality"
+    """
+    # Build POS buckets
+    pos_buckets = defaultdict(list)
+    for w in leaves:
+        pos = guess_pos(w)
+        pos_buckets[pos].append(w)
+
+    # Also add 'unknown' words to all buckets as fallback
+    for w in leaves:
+        if guess_pos(w) == 'unknown':
+            for bucket in pos_buckets.values():
+                if w not in bucket:
+                    bucket.append(w)
+
+    # Extract slots from template
+    slots = re.findall(r'\{(\w+)\}', template)
+    filled = template
+
+    for slot in slots:
+        # Extract POS type (e.g., "noun1" -> "noun")
+        pos_type = re.sub(r'\d+', '', slot)
+
+        if pos_buckets[pos_type]:
+            word = random.choice(pos_buckets[pos_type])
+            filled = filled.replace(f'{{{slot}}}', word, 1)
+        elif pos_buckets['unknown']:
+            # Fallback to unknown words
+            word = random.choice(pos_buckets['unknown'])
+            filled = filled.replace(f'{{{slot}}}', word, 1)
+        else:
+            # Last resort: any leaf
+            word = random.choice(leaves)
+            filled = filled.replace(f'{{{slot}}}', word, 1)
+
+    return filled
+
+
+def score_paragraph_resonance(paragraph: str) -> float:
+    """
+    Score paragraph quality based on:
+    - Phonetic diversity
+    - Rhythmic variance (syllable distribution)
+    - Chaos factor (unpredictability bonus)
+
+    Returns float 0.0-1.0
+    """
+    words = paragraph.strip().split()
+    if not words:
+        return 0.0
+
+    # 1. Phonetic diversity
+    fingerprints = {phonetic_fingerprint(w) for w in words}
+    phon_div = len(fingerprints) / len(words)
+
+    # 2. Rhythmic variance (syllable count variance)
+    syllables = [count_syllables(w) for w in words]
+    if len(syllables) > 1:
+        mean_syl = sum(syllables) / len(syllables)
+        variance = sum((s - mean_syl) ** 2 for s in syllables) / len(syllables)
+        rhythm = min(variance / 2.0, 1.0)  # Cap at 1.0
+    else:
+        rhythm = 0.0
+
+    # 3. Chaos factor (random, adds unpredictability)
+    chaos = random.uniform(0.3, 0.7)
+
+    return phon_div * 0.4 + rhythm * 0.4 + chaos * 0.2
+
+
+def generate_sorokin_paragraph(leaves: List[str], n_sentences: int = 3) -> str:
+    """
+    Generate a multi-sentence paragraph with:
+    - Syntactic templates (Sorokin-style)
+    - POS-based slot filling
+    - Punctuation (commas, periods)
+    - Maximum resonance selection (generate 20 candidates, pick best)
+
+    Returns a grammatically valid but semantically absurd paragraph.
+    """
+    if not leaves:
+        return ""
+
+    # Generate multiple candidates
+    candidates = []
+    for _ in range(20):
+        sentences = []
+        for _ in range(n_sentences):
+            template = random.choice(SOROKIN_SENTENCE_TEMPLATES)
+            sentence = fill_template(template, leaves)
+            sentences.append(sentence)
+
+        paragraph = ' '.join(sentences)
+        score = score_paragraph_resonance(paragraph)
+        candidates.append((score, paragraph))
+
+    # Return best scoring paragraph
+    candidates.sort(reverse=True, key=lambda x: x[0])
+    return candidates[0][1]
+
+
+# ═══════════════════════════════════════════════════════════════
 # BOOTSTRAP EXTENSION — Self-improving autopsy ritual
 # Pattern accumulation without intelligence
 # ═══════════════════════════════════════════════════════════════
@@ -1032,7 +1235,12 @@ def reassemble_corpse_bootstrap(leaves: List[str]) -> str:
     for word1, nexts in SEED_BIGRAMS.items():
         for word2 in nexts:
             weighted_bigrams[word1].append((word2, 2))
-    
+
+    # PATCH: Add README bigrams (medium-low weight)
+    for word1, nexts in README_BIGRAMS.items():
+        for word2 in nexts:
+            weighted_bigrams[word1].append((word2, int(1.5)))
+
     # Add local leaf bigrams (low weight)
     for i in range(len(leaves) - 1):
         weighted_bigrams[leaves[i].lower()].append((leaves[i + 1], 1))
@@ -1184,11 +1392,12 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
     all_leaves: List[str] = []
     for t in trees:
         all_leaves.extend(collect_leaves(t))
-    
+
+    # PATCH: Use paragraph generator instead of simple reassembly
     if all_leaves:
-        corpse = reassemble_corpse_bootstrap(all_leaves)
+        paragraph = generate_sorokin_paragraph(all_leaves, n_sentences=random.randint(2, 4))
         out.append("AUTOPSY RESULT:")
-        out.append(f"  {corpse}")
+        out.append(f"  {paragraph}")
         out.append("")
     
     # Resonance metrics visualization
@@ -1242,8 +1451,9 @@ def sorokin_autopsy_bootstrap(prompt: str) -> str:
     all_leaves: List[str] = []
     for t in trees:
         all_leaves.extend(collect_leaves(t))
-    
-    corpse = reassemble_corpse_bootstrap(all_leaves) if all_leaves else ""
+
+    # PATCH: Generate paragraph instead of simple corpse
+    corpse = generate_sorokin_paragraph(all_leaves, n_sentences=random.randint(2, 4)) if all_leaves else ""
     
     # Render basic tree for storage
     basic_report = render_autopsy(short, core, trees)
