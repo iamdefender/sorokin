@@ -387,19 +387,30 @@ def _assign_rhyme_words(
     # 3. For each line index, pick a word for its letter
     result: Dict[Tuple[str, int], str] = {}
     per_letter_indices: Dict[str, int] = defaultdict(int)
+    used_end_words: set[str] = set()  # Track used end-words to avoid duplicates
 
     for idx, letter in enumerate(RHYME_SCHEME):
         key = letter_to_key[letter]
         candidates = clusters.get(key) or list(vocab)
         rng.shuffle(candidates)
 
-        offset = per_letter_indices[letter]
-        if offset >= len(candidates):
-            # wrap around
-            offset = offset % len(candidates)
-        per_letter_indices[letter] += 1
+        # Try to find unused end-word from candidates
+        chosen_word = None
+        for attempt in range(len(candidates)):
+            offset = (per_letter_indices[letter] + attempt) % len(candidates)
+            candidate = candidates[offset]
+            if candidate not in used_end_words:
+                chosen_word = candidate
+                break
 
-        result[(letter, idx)] = candidates[offset]
+        # If all candidates used, fall back to first candidate (rare with large vocab)
+        if chosen_word is None:
+            offset = per_letter_indices[letter] % len(candidates)
+            chosen_word = candidates[offset]
+
+        per_letter_indices[letter] += 1
+        result[(letter, idx)] = chosen_word
+        used_end_words.add(chosen_word)
 
     # 4. Force heavy words into the final couplet if possible (GG)
     if charged:
@@ -484,7 +495,8 @@ def _generate_line(
     
     # PATCH 7: Punctuation with enjambment support
     # Enjambment: sometimes no punctuation to flow into next line
-    use_enjambment = rng.random() < 0.2 and line_idx not in {3, 7, 11, 12, 13}
+    # Increased from 0.2 to 0.3 for better flow (Desktop Claude suggestion)
+    use_enjambment = rng.random() < 0.3 and line_idx not in {3, 7, 11, 12, 13}
     
     # Punctuation pass (loose "Shakespearean" vibe):
     # - lines 3 and 7 (end of first two quatrains) → ';'
