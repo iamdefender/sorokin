@@ -891,12 +891,14 @@ async def lookup_branches_for_word(
     if len(filtered) < width and not candidates:
         # Web failed! Try to get more from memory (beyond the 50% limit)
         additional_needed = width - len(filtered)
-        additional_mem = recall_word_relations(word, memory_limit + additional_needed)
-        # Filter: not already seen, not in HTML artifacts
-        additional_mem = [m for m in additional_mem
-                         if m.lower() not in seen and m.lower() not in HTML_ARTIFACTS]
+        # Fetch extra words from memory
+        additional_mem = recall_word_relations(word, memory_limit * 2 + additional_needed)
+        # IMPORTANT: Slice BEFORE filtering (Copilot bug fix!)
         # Skip the ones we already took (first memory_limit items)
         additional_mem = additional_mem[memory_limit:]
+        # THEN filter for unseen/non-artifact words
+        additional_mem = [m for m in additional_mem
+                         if m.lower() not in seen and m.lower() not in HTML_ARTIFACTS]
 
         for m in additional_mem[:additional_needed]:
             filtered.append(m)
