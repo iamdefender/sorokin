@@ -20,7 +20,7 @@
 
 ### What is this madness?
 
-`sorokin` is a dual-module Python skrypt (~2549 lines) consisting of:
+`sorokin` is a dual-module (for now) Python skrypt (~2549 lines) consisting of:
 - **sorokin.py** (~2008 lines): The main autopsy engine—tears your innocent prompts apart like a psychopathic linguist, builds recursive trees of semantic mutations, and reassembles the corpse into grammatically valid but semantically deranged paragraphs.
 - **sonnet.py** (~541 lines): The *ASS* (Autopsy Sonnet Symphony)—takes Sorokin's dissection output and generates a 14-line Shakespearean sonnet (ABABCDCDEFEFGG rhyme scheme) using only the morgue's accumulated vocabulary. No internet. No embeddings. Just pure structural psychosis in iambic pentameter.
 
