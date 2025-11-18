@@ -143,6 +143,9 @@ HTML_ARTIFACTS = {
     # DDG error/rate-limit page artifacts
     "persists", "anonymized", "understand", "context", "getting",
     "helps", "support", "address", "includes",
+
+    # DDG HTML/CSS artifacts (IDs, classes, common UI elements)
+    "dabcf", "bots", "duck", "code", "complete", "human",
 }
 
 
