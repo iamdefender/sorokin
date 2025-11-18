@@ -31,6 +31,7 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 MAX_INPUT_CHARS = 100
 MAX_WORDS = 6          # max core words to dissect
 MAX_DEPTH = 4          # recursion safety cap
+TREE_WIDTH = 4         # constant fan-out (4 branches per node)
 MAX_HTML_CACHE = 50    # max cached HTML responses to prevent unbounded memory growth
 MAX_CONCURRENT_REQUESTS = 3   # max simultaneous web requests (lowered from 10 to avoid DDG rate limiting)
 WEB_REQUEST_TIMEOUT = 3.0     # timeout in seconds
@@ -1167,9 +1168,9 @@ async def sorokin_autopsy(prompt: str) -> str:
 
     core = select_core_words(tokens)
 
-    k = max(1, min(len(core), MAX_DEPTH))
-    width = k
-    depth = k
+    # Width is CONSTANT (4×4 trees), depth varies with number of core words
+    width = TREE_WIDTH
+    depth = max(1, min(len(core), MAX_DEPTH))
 
     all_candidates = tokens.copy()
 
@@ -1729,9 +1730,9 @@ async def sorokin_autopsy_bootstrap(prompt: str) -> str:
 
     core = select_core_words(tokens)
 
-    k = max(1, min(len(core), MAX_DEPTH))
-    width = k
-    depth = k
+    # Width is CONSTANT (4×4 trees), depth varies with number of core words
+    width = TREE_WIDTH
+    depth = max(1, min(len(core), MAX_DEPTH))
 
     all_candidates = tokens.copy()
 
