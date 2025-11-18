@@ -1778,7 +1778,41 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
         out.append("AUTOPSY RESULT:")
         out.append(f"  {paragraph}")
         out.append("")
-    
+
+    # ═══════════════════════════════════════════════════════════════
+    # SONNET INTEGRATION — Silent fallback if module not available
+    # ═══════════════════════════════════════════════════════════════
+    try:
+        import sonnet as sonnet_module
+
+        # Prepare full autopsy text for sonnet input
+        autopsy_full_text = "\n".join(out)
+
+        # Generate sonnet synchronously (safe=True means silent errors)
+        sonnet_text = sonnet_module.compose_sonnet_sync(
+            autopsy_text=autopsy_full_text,
+            db_path=DB_PATH,
+            seed_corpus=None  # README bigrams already loaded from DB
+        )
+
+        if sonnet_text:
+            out.append("SONNET:")
+            # Indent each line (except title if present)
+            for line in sonnet_text.split('\n'):
+                if line.startswith("Sonnet:"):
+                    # Title line - no indent
+                    out.append(line)
+                else:
+                    # Sonnet lines - indent
+                    out.append(f"  {line}")
+            out.append("")
+    except (ImportError, Exception):
+        # Silently skip sonnet if:
+        # - sonnet.py not found (ImportError)
+        # - any other error (Exception)
+        # User won't see any error - just no SONNET section
+        pass
+
     # Resonance metrics visualization
     def _render_bar(value: float, width: int = 10) -> str:
         """Render ASCII progress bar."""
