@@ -5,6 +5,7 @@ import asyncio
 import sys
 import os
 import sqlite3
+import pytest
 
 # Add current dir to path
 sys.path.insert(0, os.path.dirname(__file__))
@@ -16,6 +17,7 @@ from sorokin import (
     DB_PATH
 )
 
+@pytest.mark.asyncio
 async def test_balanced_mix():
     """Test that web is ALWAYS called, even when memory is full."""
     init_db()
