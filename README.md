@@ -7,7 +7,7 @@
 ╚══════╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝
 ```
 
-# sorokin | by Arianna Method (@ariannamethod)
+# sorokin | by Arianna Method
 
 > "The heads of philologists are stuffed with books to the brim. They see life only through text. And they are proud of it. … Forever gorged and poisoned by literature, they take living life as the continuation of text, as its appendix.
 >
@@ -735,7 +735,7 @@ This README promised to be both circus barker and lab notebook, so here's the cl
 
 **Full Async/Await Refactor: The Morgue Dissects in Parallel**
 
-Sorokin now performs autopsies **асинхронно** (asynchronously) — no more hanging on complex prompts! Complete architectural rewrite with `httpx` + `asyncio`:
+Sorokin now performs autopsies asynchronously — no more hanging on complex prompts! Complete architectural rewrite with `httpx` + `asyncio`:
 
 **Performance gains:**
 - 3-4x faster on complex prompts (was 60+ seconds, now ~15-20 seconds)
