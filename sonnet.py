@@ -147,9 +147,11 @@ def _compose_sonnet_impl(
     # PATCH 6: Optional title from most charged word
     title = None
     if charged:
-        # Pick most charged word (first in list) and use UPPERCASE for psychotic emphasis
-        # UPPERCASE looks better when words are concatenated (e.g., OXFORDLEARNERSDICTIONARIES)
-        title = f"Sonnet: {charged[0].upper()}"
+        # Pick most charged word (first in list), split CamelCase, and title-case it
+        # Splits "OxfordLearnersDictionaries" -> "Oxford Learners Dictionaries"
+        raw_word = charged[0]
+        split_word = _split_camel_case(raw_word)
+        title = f"Sonnet: {split_word.title()}"
     
     # 6. Return formatted sonnet (with optional title)
     if title:
@@ -179,6 +181,40 @@ def _normalise_vocab(words: Iterable[str]) -> List[str]:
         seen.add(lw)
         result.append(lw)
     return result
+
+
+def _split_camel_case(word: str) -> str:
+    """
+    Split concatenated words by capital letters.
+
+    Examples:
+        "oxfordlearnersdictionaries" -> "oxford learners dictionaries"
+        "OXFORDLEARNERSDICTIONARIES" -> "OXFORD LEARNERS DICTIONARIES"
+        "OxfordLearnersDictionaries" -> "Oxford Learners Dictionaries"
+        "HTTP" -> "HTTP"  (no split for all-caps acronyms)
+    """
+    if not word:
+        return word
+
+    # If word is all lowercase or all uppercase (acronym), return as-is
+    if word.islower() or word.isupper():
+        return word
+
+    # Split on capital letters (but keep the capital with the new word)
+    parts = []
+    current = word[0]
+
+    for i in range(1, len(word)):
+        if word[i].isupper():
+            parts.append(current)
+            current = word[i]
+        else:
+            current += word[i]
+
+    if current:
+        parts.append(current)
+
+    return " ".join(parts)
 
 
 def _bigrams_from_tokens(tokens: Sequence[str]) -> Dict[str, List[str]]:
@@ -312,7 +348,15 @@ def _select_charged_words(
 ) -> List[str]:
     """
     Pick "charged" words: long, rare, and present in autopsy text.
+    Returns words with original casing preserved.
     """
+    # Build lowercase -> original case mapping (prefer first occurrence)
+    case_map: Dict[str, str] = {}
+    for token in autopsy_tokens:
+        low = token.lower()
+        if low not in case_map:
+            case_map[low] = token
+
     autopsy_low = [w.lower() for w in autopsy_tokens]
     counts = Counter(autopsy_low)
 
@@ -325,7 +369,8 @@ def _select_charged_words(
         scored.append((score, w))
 
     scored.sort(reverse=True)
-    top = [w for _, w in scored[:max_words]]
+    # Return words with original casing
+    top = [case_map.get(w, w) for _, w in scored[:max_words]]
 
     # fallback: if autopsy is too small, sample from vocab
     if len(top) < max_words // 2:

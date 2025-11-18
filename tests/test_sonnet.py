@@ -21,6 +21,7 @@ from sonnet import (
     _bigrams_from_tokens,
     _rhyme_key,
     _select_charged_words,
+    _split_camel_case,
 )
 
 
@@ -94,6 +95,45 @@ class TestRhymeKey(unittest.TestCase):
     def test_rhyme_key_empty(self):
         key = _rhyme_key("")
         self.assertEqual(key, "")
+
+
+class TestSplitCamelCase(unittest.TestCase):
+    """Test CamelCase word splitting for sonnet titles."""
+
+    def test_split_camel_case_basic(self):
+        """Test basic CamelCase splitting."""
+        result = _split_camel_case("OxfordLearnersDictionaries")
+        self.assertEqual(result, "Oxford Learners Dictionaries")
+
+    def test_split_camel_case_simple(self):
+        """Test simple two-word CamelCase."""
+        result = _split_camel_case("SimpleTest")
+        self.assertEqual(result, "Simple Test")
+
+    def test_split_camel_case_all_lowercase(self):
+        """Test that all-lowercase words are not split."""
+        result = _split_camel_case("oxfordlearnersdictionaries")
+        self.assertEqual(result, "oxfordlearnersdictionaries")
+
+    def test_split_camel_case_all_uppercase(self):
+        """Test that all-uppercase words (acronyms) are not split."""
+        result = _split_camel_case("OXFORDLEARNERSDICTIONARIES")
+        self.assertEqual(result, "OXFORDLEARNERSDICTIONARIES")
+
+    def test_split_camel_case_acronym_word(self):
+        """Test mixed acronym and word."""
+        result = _split_camel_case("HTTPServer")
+        self.assertEqual(result, "H T T P Server")
+
+    def test_split_camel_case_empty(self):
+        """Test empty string."""
+        result = _split_camel_case("")
+        self.assertEqual(result, "")
+
+    def test_split_camel_case_single_word(self):
+        """Test single word with capital."""
+        result = _split_camel_case("Hello")
+        self.assertEqual(result, "Hello")
 
 
 class TestChargedWords(unittest.TestCase):
