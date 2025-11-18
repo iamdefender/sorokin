@@ -904,16 +904,50 @@ async def lookup_branches_for_word(
             if len(filtered) >= width:
                 break
 
-    # 4) NO FALLBACK TO all_candidates!
+    # 4) EMERGENCY FALLBACK: README words (phonetic matching)!
+    # If still don't have enough (DDG banned + empty memory), use README vocabulary
+    # Use PHONETIC MATCHING to find related words (not just direct bigrams)
+    if len(filtered) < width:
+        readme_bigrams = _build_readme_bigrams()
+
+        # Try direct bigrams first
+        if lw in readme_bigrams:
+            readme_words = [w for w in readme_bigrams[lw]
+                           if w.lower() not in seen and w.lower() not in HTML_ARTIFACTS]
+            for rw in readme_words[:width - len(filtered)]:
+                filtered.append(rw)
+                seen.add(rw.lower())
+
+        # If still need more, do phonetic matching against ALL README words
+        if len(filtered) < width:
+            # Get all unique words from README bigrams (keys + values)
+            readme_vocab = set(readme_bigrams.keys())
+            for vals in readme_bigrams.values():
+                readme_vocab.update(vals)
+            readme_vocab = list(readme_vocab)
+
+            # Phonetic matching
+            phonetic_matches = find_phonetic_neighbors(word, readme_vocab, width - len(filtered))
+            for pm in phonetic_matches:
+                if pm.lower() not in seen and pm.lower() not in HTML_ARTIFACTS:
+                    filtered.append(pm)
+                    seen.add(pm.lower())
+                    if len(filtered) >= width:
+                        break
+
+    # 5) NO FALLBACK TO all_candidates!
     # Previously: used prompt words as fallback, but this creates garbage.
-    # Better to use more memory or return partial trees than to breed prompt words.
+    # Better to use memory → web → README → partial trees.
+    # Never breed prompt words recursively.
     #
-    # REMOVED:
-    # - Phonetic neighbors from all_candidates (prompt words)
-    # - Direct fallback to all_candidates
-    # - Self-reference fallback (word → word)
+    # Fallback chain:
+    # 1. Memory (50% baseline)
+    # 2. Web (DDG parallel queries)
+    # 3. More memory (if web failed)
+    # 4. README bigrams (emergency)
+    # 5. Partial tree (honest failure)
     #
-    # Result: Smart fallback (memory first), cleaner trees.
+    # Result: Smart cascading fallback, no garbage.
 
     # Deduplicate while preserving order
     seen_dedup = set()

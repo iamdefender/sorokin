@@ -806,6 +806,25 @@ Switched from Google to DuckDuckGo for synonym discovery. Google was blocking bo
 - "machines" → automobile, equipment, mechanical, apparatus
 Result: Real semantic resonance instead of random HTML artifacts.
 
+**Smart Fallback Chain with README Phonetic Matching**
+Implemented emergency fallback system that NEVER produces empty trees or falls back to prompt words (which caused recursive garbage). The fallback chain:
+1. **Memory cache (50%)** - Fast cached results from SQLite, limited to half of requested width
+2. **Web scraping (50%)** - Fresh DuckDuckGo synonyms to maintain novelty
+3. **Extended memory** - If web fails (rate limiting/ban), grab additional results from cache beyond 50% limit
+4. **README phonetic matching** - Use phonetic fingerprints to find similar-sounding words from README vocabulary (1,172+ bigrams)
+5. **Partial trees** - Return whatever was found, never fall back to prompt words
+
+Example: "kim kardashyan" → finds "brim", "him", "karpathy", "bootstrapper" via phonetic matching when web is blocked. No more "(Skipped X words with no synonyms)" shame! Every word gets mutations, even obscure ones.
+
+**Rate Limiting and Anti-Ban Measures**
+Added protections against DuckDuckGo rate limiting:
+- Realistic User-Agent (Chrome on Windows instead of obvious bot signature)
+- Request delay of 0.5 seconds between web calls
+- Reduced concurrency from 10 → 3 simultaneous requests
+- Error page detection ("If this persists, please email us...")
+- Extended HTML_ARTIFACTS blacklist with DDG UI elements
+Result: Stable web scraping even during extended autopsy sessions.
+
 **Synthetic Mutation Purge**
 Removed `_generate_phonetic_variants` entirely because it was creating garbage that polluted the autopsy:
 - Reversed words ("elpmis", "etaerc") bred recursively into unreadable noise
