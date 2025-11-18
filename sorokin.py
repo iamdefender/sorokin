@@ -43,7 +43,9 @@ STOPWORDS = {
     "the", "and", "to", "a", "in", "it", "of", "for", "on", "with", "as", "is", "at",
     "by", "from", "or", "an", "be", "this", "that", "are", "was", "but", "not",
     "i", "you", "he", "she", "they", "we",
-    "и", "в", "на", "но", "не", "это", "как", "что", "тот", "той", "то", "за",
+    # Common interjections/greetings (don't dissect these)
+    "hello", "hi", "hey", "yo", "sup", "bye", "ok", "okay", "yes", "no", "yeah",
+    "привет", "пока", "да", "нет",
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -146,6 +148,10 @@ HTML_ARTIFACTS = {
 
     # DDG HTML/CSS artifacts (IDs, classes, common UI elements)
     "dabcf", "bots", "duck", "code", "complete", "human",
+
+    # Reddit/forum/social media artifacts
+    "subredditstats", "subreddit", "generationiron", "assoass",
+    "redditors", "upvote", "downvote", "karma",
 }
 
 
@@ -1066,15 +1072,21 @@ def render_autopsy(prompt: str, words: List[str], trees: List[Node]) -> str:
     out.append(prompt.strip())
     out.append("")
 
+    # Only render trees that have children (skip empty trees)
+    skipped = []
     for w, t in zip(words, trees):
-        out.append(w)
         if t.children:
+            out.append(w)
             for i, ch in enumerate(t.children):
                 last = (i == len(t.children) - 1)
                 out.extend(render_node(ch, "  ", last))
+            out.append("")
         else:
-            # Show placeholder when no children found (better than empty silence)
-            out.append("  └─ (no synonyms found)")
+            skipped.append(w)
+
+    # Optionally mention skipped words
+    if skipped:
+        out.append(f"(Skipped {len(skipped)} words with no synonyms: {', '.join(skipped)})")
         out.append("")
 
     all_leaves: List[str] = []
@@ -1601,15 +1613,21 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
     out.append(prompt.strip())
     out.append("")
 
+    # Only render trees that have children (skip empty trees)
+    skipped = []
     for w, t in zip(words, trees):
-        out.append(w)
         if t.children:
+            out.append(w)
             for i, ch in enumerate(t.children):
                 last = (i == len(t.children) - 1)
                 out.extend(render_node(ch, "  ", last))
+            out.append("")
         else:
-            # Show placeholder when no children found (better than empty silence)
-            out.append("  └─ (no synonyms found)")
+            skipped.append(w)
+
+    # Optionally mention skipped words
+    if skipped:
+        out.append(f"(Skipped {len(skipped)} words with no synonyms: {', '.join(skipped)})")
         out.append("")
 
     all_leaves: List[str] = []
