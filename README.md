@@ -9,7 +9,7 @@
 
 # sorokin | by Arianna Method
 
-## A Prompt Autopsy Engine  
+## A Prompt Autopsy Framework  
 
 *Or: How I Learned to Stop Worrying and Love the Dissection*
 
