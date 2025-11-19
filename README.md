@@ -27,12 +27,12 @@ It consists of:
 - **sonnet.py** (~599 lines): The *ASS* (Autopsy Sonnet Symphony)— asynchronously takes **sorokin.py**'s dissection output and writes a 14-line Shakespearean sonnet (ABABCDCDEFEFGG rhyme scheme) using only output data and the memory's accumulated vocabulary. No internet. No embeddings. Just pure structural psychosis in iambic pentameter.
 - **vova.py** (~397 lines): The *VOVA* (README resonance meta-layer)— implements SSKA (Suppertime Subjectivity Kernel Autonomous) to warp text through README's resonance field using accumulated bigram centers. Meta-cannibalism: the system eats its own documentation.
 
-Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*, to reassemble them, and to declare the output canonical.
+Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, `sorokin`embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*, to reassemble them, and to declare the output canonical.
 
 
 ### Exhibit: Maximum Autopsy Tree 
 
-Because `sorokin` builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map from the morgue. Feed Sorokin **"destroy the sentence"** (warped through VOVA's README resonance field into "Sentence phrase tries transgressive and Love the reassembled text for his own documentation...") and witness the meta-cannibalism:
+Because `sorokin` builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map from the morgue. Feed `sorokin` **"destroy the sentence"** (warped through VOVA's README resonance field into "Sentence phrase tries transgressive and Love the reassembled text for his own documentation...") and witness the meta-cannibalism:
 
 ```
 Sentence phrase tries transgressive and Love the reassembled text for his own documentation and a li
