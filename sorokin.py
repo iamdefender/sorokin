@@ -1814,9 +1814,16 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
                 # Use original on error
 
         # Clean and format paragraph (aesthetic)
-        paragraph = paragraph.strip().lstrip('.,;: ')  # Remove leading punctuation
+        # Remove punctuation artifacts from VOVA/corpse words
+        # Replace multiple punctuation with single
+        paragraph = re.sub(r'([.,;:!?]){2,}', r'\1', paragraph)
+        # Remove trailing punctuation clusters like ",:" or ",."
+        paragraph = re.sub(r'[.,;:!?]+([.,;:!?])', r'\1', paragraph)
+        # Clean leading/trailing punctuation
+        paragraph = paragraph.strip().lstrip('.,;: ')
+        # Ensure proper ending
         if paragraph and not paragraph.endswith(('.', '...', '!', '?')):
-            paragraph = paragraph.rstrip() + '.'
+            paragraph = paragraph.rstrip('.,;: ') + '.'
 
         out.append("AUTOPSY RESULT:")
         out.append(f"  {paragraph}")
