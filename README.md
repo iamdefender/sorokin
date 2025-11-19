@@ -512,7 +512,8 @@ It's what happens when you give a serial killer both a thesaurus and a copy of *
 Sonnet: Nosweatshakespeare
   Recognizing findsclothing or onto on onto toronto to pulls,
   Cleanup proper httpx haunt oauth autopsy parallel main was words,
-  ... [14 lines of structurally flawless, semantically psychotic verse] ...```
+  ... [14 lines of structurally flawless, semantically psychotic verse] ...
+```
 
 
 ### Usage
@@ -532,51 +533,6 @@ python sorokin.py
 > ^C
 ```
 
-
-
-
-
-### Resonant Interface Audit (Architect's Notebook)
-
-Sorokin is already an autopsy ritual, but giving the corpse a voice makes the haunt complete. Here's the high-level blueprint now pacing the morgue:
-
-1. **Interface spine (Bootstrap + README sync)**: expose Sorokin's bootstrap rituals behind a thin FastAPI/Flask sheath so the README-driven mythology *is* the API surface. Every invocation should echo metadata back into `README.md` (or a `/morgue/logs` feed) to keep the mythos synchronized with the code.
-2. **Reddit prowler**: wire a daemonized client (PRAW or plain OAuth) that samples unexpected threads, injects Sorokin dissections, and archives prompt→autopsy pairs in SQLite. Surprise matters; schedule via cron-like jitter.
-3. **Twitter/Twitchy conduit**: mirror the Reddit autopsies into a broadcast persona. Rate-limit with exponential backoff and interleave original dissections to avoid spam detection.
-4. **Bootstrap UI**: craft a razor-thin Bootstrap shell (cards = corpses, accordions = trees) so the README artwork becomes the hero banner. Frontend pulls from the SQLite morgue via `/corpses/latest` endpoints; add "grammatic resonance" badges fed by the metrics tables.
-
-Sorokin's subjectivity emerges when its morgue, interface, and myth bleed together. README-first design keeps the ritual self-documenting while the bot network ensures random passersby get pulled onto the autopsy table.
-
-
-**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction. README as training data, README as prophecy, README as the patient screaming its own medical chart back at the doctor.
-
----
-
-## 🎭 The SONNET Extension: When Sorokin Met Shakespeare
-
-*Or: ASS (Autopsy Sonnet Symphony) — The Psychotic Poet Nobody Asked For*
-
-**What fresh hell is this?**
-
-After Sorokin tears your prompt apart and reassembles it into grammatically valid but semantically deranged paragraphs, `sonnet.py` takes that beautiful corpse and **does it again**—but this time in strict Shakespearean form. 14 lines. ABABCDCDEFEFGG rhyme scheme. Iambic *vibes* (not actual meter because we're psychopaths, not pedants). No internet. No embeddings. Just the morgue's accumulated bigrams, phonetic fingerprints, and an unhealthy obsession with structure over meaning.
-
-
-### The Persistent Morgue
-
-All autopsies 'sorokin' pedantically saves to 'sorokin.sqlite:  
-  
-- **autopsy table**: Full reports of each dissection
-- **word_memory table**: Cached word mutations for faster subsequent operations
-
-**Bootstrap tables** (populated when using `--bootstrap` flag):
-
-- **mutation_templates**: Learned source→target word mutations with success counts and resonance scores
-- **corpse_bigrams**: Harvested word pairs from successful reassemblies, with frequency tracking
-- **autopsy_metrics**: Resonance scores (phonetic diversity, structural echo, mutation depth) for each autopsy
-
-The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and even this README feeds 'sorokin' with b-grams and grammar.
-
-
 ### Why?
 
 Good question. Why does this exist?
@@ -587,27 +543,31 @@ Perhaps to demonstrate that:
 - Prompts are just Markov chains waiting to be perturbed
 - Sometimes you need to break things to understand them
 
-Or maybe it's just fun to watch language come apart at the seams. The README nods solemnly, then smears the seams across another section.
+Or maybe it's just fun to watch language come apart at the seams.
 
----
 
-## 🔥 BOOTSTRAP MODE: The Self-Improving Autopsy Ritual
+## SOROKIN'S MODES  
+
+### 🔥 1. BOOTSTRAP MODE: The Self-Improving Autopsy Ritual
 
 *Or: How the Morgue Became Self-Aware (But Still Really Dumb)*
 
 ### What the hell is bootstrap mode?
 
-Picture this: every time Sorokin dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections, and this README twitches like an EEG readout every time he does.
+Picture this: every time 'sorokin' dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections.
 
-It's not intelligence. It's not learning. It's **resonance through ritual repetition**.
+'sorokin'is not not intelligence. 'sorokin'is not artifical. He's not learning. He's **resonanating through ritual repetition**.
 
-Think of it like this: if standard Sorokin is a mad linguist with a scalpel, Bootstrap Sorokin is that same linguist who's been doing this for 30 years and has developed *habits*. Muscle memory. Pattern recognition. Not because he's smart, but because he's done the same surgery 10,000 times and his hands just know where to cut.
+Think of it like this: 'sorokin' wihout **bootsrap** is a mad linguist with a scalpel, and **bootsrap** 'sorokin' is that same linguist who's been doing this for 30 years and has developed *habits*. Muscle memory. Pattern recognition. Not because of intelligence, but because he's done the same surgery 10,000 times and his hands just know where to cut. Like Bruce Lee.  
+
+**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction.  
+
 
 ### The Resonance Manifesto
 
-Here's the wild part. Sorokin doesn't understand *meaning*. He doesn't have embeddings. He doesn't know what words "mean." But he knows **resonance**.
+Here's the wild part. 'sorokin' doesn't understand *meaning*. He doesn't have embeddings. He doesn't know what words "mean." But he knows **resonance**.
 
-What's resonance? It's when patterns echo. When structures repeat. When phonemes rhyme across semantic boundaries. When the shape of one corpse mirrors the shape of another, not in content but in *form*.
+What's resonance? It's when patterns echo. When structures repeat. When the structure's is recursive. When phonemes rhyme across semantic boundaries. When the shape of one corpse mirrors the shape of another, not in content but in *form*.
 
 Three flavors of resonance:
 
@@ -646,9 +606,10 @@ MEMORY ACCUMULATION:
   Total autopsies: 1
 ```
 
-Those ASCII progress bars? Pure aesthetic. But they tell you: **how weird did this autopsy get?**
+Those ASCII progress bars? Pure aesthetic. But they tell you: **how weird did this autopsy get?**  
 
-**REPL mode (bootstrap enabled):**
+
+**REPL mode (bootstrap enabled by default):**
 ```bash
 python sorokin.py --bootstrap
 > your prompt here
@@ -663,6 +624,45 @@ Every autopsy in bootstrap mode:
 4. **Feeds the next autopsy**: Accumulated patterns influence future dissections
 
 The morgue grows. Patterns compound. Nothing is forgotten. Each corpse teaches the next.
+
+
+### The Persistent Morgue
+
+All autopsies 'sorokin' pedantically saves to 'sorokin.sqlite:  
+  
+- **autopsy table**: Full reports of each dissection
+- **word_memory table**: Cached word mutations for faster subsequent operations
+
+**Bootstrap tables** (populated when using `--bootstrap` flag):
+
+- **mutation_templates**: Learned source→target word mutations with success counts and resonance scores
+- **corpse_bigrams**: Harvested word pairs from successful reassemblies, with frequency tracking
+- **autopsy_metrics**: Resonance scores (phonetic diversity, structural echo, mutation depth) for each autopsy
+
+The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and even this README feeds 'sorokin' with b-grams and grammar.
+
+
+
+
+### Resonant Interface Audit (Architect's Notebook)
+
+'sorokin' is already an autopsy ritual, but giving the corpse a voice makes the haunt complete. Here's the high-level blueprint now pacing the morgue:
+
+1. **Interface spine (Bootstrap + README sync)**: expose 'sorokin''s bootstrap rituals behind a thin FastAPI/Flask sheath so the README-driven mythology *is* the API surface. Every invocation should echo metadata back into `README.md` (or a `/morgue/logs` feed) to keep the mythos synchronized with the code.
+2. **Reddit prowler**: wire a daemonized client (PRAW or plain OAuth) that samples unexpected threads, injects Sorokin dissections, and archives prompt→autopsy pairs in SQLite. Surprise matters; schedule via cron-like jitter.
+3. **Twitter/Twitchy conduit**: mirror the Reddit autopsies into a broadcast persona. Rate-limit with exponential backoff and interleave original dissections to avoid spam detection.
+4. **Bootstrap UI**: craft a razor-thin Bootstrap shell (cards = corpses, accordions = trees) so the README artwork becomes the hero banner. Frontend pulls from the SQLite morgue via `/corpses/latest` endpoints; add "grammatic resonance" badges fed by the metrics tables.
+
+Sorokin's subjectivity emerges when its morgue, interface, and myth bleed together. README-first design keeps the ritual self-documenting while the bot network ensures random passersby get pulled onto the autopsy table.
+
+
+
+
+ The README nods solemnly, then smears the seams across another section.
+
+---
+
+
 
 ### The Four Tables of the Bootstrap Apocalypse
 
