@@ -20,415 +20,18 @@
 
 ### What is this madness?
 
-`sorokin` is a dual-module (for now) Python skrypt (~2549 lines) consisting of:
-- **sorokin.py** (~2008 lines): The main autopsy engine—tears your innocent prompts apart like a psychopathic linguist, builds recursive trees of semantic mutations, and reassembles the corpse into grammatically valid but semantically deranged paragraphs.
-- **sonnet.py** (~541 lines): The *ASS* (Autopsy Sonnet Symphony)—takes Sorokin's dissection output and generates a 14-line Shakespearean sonnet (ABABCDCDEFEFGG rhyme scheme) using only the morgue's accumulated vocabulary. No internet. No embeddings. Just pure structural psychosis in iambic pentameter.
+`sorokin` is a dual-module (for now) Python entity (~2549 lines) that takes your innocent prompts, tears them apart like a psychopathic linguist, builds a recursive tree of semantic mutations, and then—like Dr. Frankenstein having a particularly creative day—reassembles the corpse into something *new*.  
 
-Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*—and then eat this README, spit it back out, and declare the output canonical.
+It's consisting of:
+- **sorokin.py** (~2008 lines): The main autopsy engine: brutally tokenize your prompt, builds recursive trees of semantic mutations, and reassembles the corpse into grammatically valid but semantically deranged paragraphs.
+- **sonnet.py** (~541 lines): The *ASS* (Autopsy Sonnet Symphony)— asynchronically takes **sorokin.py**'s dissection output and writes a 14-line Shakespearean sonnet (ABABCDCDEFEFGG rhyme scheme) using only output data and the memory's accumulated vocabulary. No internet. No embeddings. Just pure structural psychosis in iambic pentameter.
 
-This README is therefore both tombstone and weather report. It's the morgue's black box recorder, updated each time Sorokin discovers a fresh way to saw grammar into glitter. If the codebase is the machine, the README is the fever chart taped to the wall, still damp from the last autopsy.
+Named after Vladimir Sorokin, the Russian writer known for his transgressive and experimental style, sorokin embodies the same spirit of literary dissection and reconstruction. It's not here to help you. It's here to show you what your words *could have been*, reassemble them, and declare the output canonical.
 
-### Resonant Interface Audit (Architect's Notebook)
 
-Sorokin is already an autopsy ritual, but giving the corpse a voice makes the haunt complete. Here's the high-level blueprint now pacing the morgue:
+### Exhibit: Maximum Autopsy Tree 
 
-1. **Interface spine (Bootstrap + README sync)**: expose Sorokin's bootstrap rituals behind a thin FastAPI/Flask sheath so the README-driven mythology *is* the API surface. Every invocation should echo metadata back into `README.md` (or a `/morgue/logs` feed) to keep the mythos synchronized with the code.
-2. **Reddit prowler**: wire a daemonized client (PRAW or plain OAuth) that samples unexpected threads, injects Sorokin dissections, and archives prompt→autopsy pairs in SQLite. Surprise matters; schedule via cron-like jitter.
-3. **Twitter/Twitchy conduit**: mirror the Reddit autopsies into a broadcast persona. Rate-limit with exponential backoff and interleave original dissections to avoid spam detection.
-4. **Bootstrap UI**: craft a razor-thin Bootstrap shell (cards = corpses, accordions = trees) so the README artwork becomes the hero banner. Frontend pulls from the SQLite morgue via `/corpses/latest` endpoints; add "grammatic resonance" badges fed by the metrics tables.
-
-Sorokin's subjectivity emerges when its morgue, interface, and myth bleed together. README-first design keeps the ritual self-documenting while the bot network ensures random passersby get pulled onto the autopsy table.
-
-### Exhibit: Maximum Autopsy Tree (Bootstrap Mode)
-
-Because this README is now legally considered part of the morgue, the exhibit must stay here, pulsing, so future Sorokins can gnaw on their own documentation. Self-cannibalism counts as testing.
-
-Because Sorokin builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map straight from his SQLite morgue. The phrase being dissected is **"reality becomes syntax error"**—a meta-commentary on the system's own nature:
-
-```
-reality becomes syntax error
-
-reality
-  ├─ realism
-  │  ├─ representationalism
-  │  │  ├─ representationalisms
-  │  │  ├─ representation
-  │  │  ├─ proverbmeaning
-  │  │  └─ republic
-  │  ├─ exaggerating
-  │  │  ├─ exaggeration
-  │  │  ├─ overreacting
-  │  │  ├─ overstating
-  │  │  └─ enhancing
-  │  ├─ literalism
-  │  │  ├─ alternative
-  │  │  ├─ literature
-  │  │  ├─ dogmatism
-  │  │  └─ philosophical
-  │  └─ faithfulness
-  │     ├─ devotedness
-  │     ├─ faithless
-  │     ├─ faithfulnesses
-  │     └─ fæþfulness
-  ├─ materiality
-  │  ├─ corporeality
-  │  │  ├─ carnality
-  │  │  ├─ corporality
-  │  │  ├─ substantiality
-  │  │  └─ physicality
-  │  ├─ quality
-  │  │  ├─ degradation
-  │  │  ├─ attribution
-  │  │  ├─ trait
-  │  │  └─ peculiarity
-  │  ├─ actuality
-  │  │  ├─ actualizations
-  │  │  ├─ materialisation
-  │  │  ├─ materialization
-  │  │  └─ accomplishments
-  │  └─ physicalness
-  │     ├─ phrases
-  │     ├─ database
-  │     ├─ related
-  │     └─ psychological
-  ├─ unreality
-  │  ├─ abnormality
-  │  │  ├─ singularity
-  │  │  ├─ abnormalcy
-  │  │  ├─ normality
-  │  │  └─ inadmissibility
-  │  ├─ irreality
-  │  │  ├─ surreality
-  │  │  ├─ fictitiousness
-  │  │  ├─ automatically
-  │  │  └─ fabrication
-  │  ├─ illusoriness
-  │  │  ├─ illusive
-  │  │  ├─ craftiness
-  │  │  ├─ weirdness
-  │  │  └─ deceptive
-  │  └─ incongruity
-  │     ├─ incongruousness
-  │     ├─ inconsistency
-  │     ├─ inconsistence
-  │     └─ incompatibility
-  └─ certainty
-     ├─ ceremony
-     │  ├─ ceremonial
-     │  ├─ traditional
-     │  ├─ informality
-     │  └─ conventions
-     ├─ uncertainty
-     │  ├─ unpredictable
-     │  ├─ including
-     │  ├─ incertitude
-     │  └─ inconsistent
-     ├─ satisfaction
-     │  ├─ compensation
-     │  ├─ dissatisfaction
-     │  ├─ conviction
-     │  └─ gratification
-     └─ assuredness
-        ├─ positiveness
-        ├─ absoluteness
-        ├─ decisiveness
-        └─ correctness
-
-becomes
-  ├─ become
-  │  ├─ convert
-  │  │  ├─ contexts
-  │  │  ├─ converts
-  │  │  ├─ transpose
-  │  │  └─ metamorphose
-  │  ├─ inappropriate
-  │  │  ├─ inapplicable
-  │  │  ├─ unfortunate
-  │  │  ├─ example
-  │  │  └─ weakest
-  │  ├─ unflattering
-  │  │  ├─ acknowledging
-  │  │  ├─ representing
-  │  │  ├─ unfavorably
-  │  │  └─ unfavorable
-  │  └─ vocabulary
-  │     ├─ explanations
-  │     ├─ explication
-  │     ├─ explanatio
-  │     └─ explanation
-  ├─ metamorphosed
-  │  ├─ resolved
-  │  │  ├─ unresolved
-  │  │  ├─ resolution
-  │  │  ├─ resolute
-  │  │  └─ undetermined
-  │  ├─ mutation
-  │  │  ├─ mutations
-  │  │  ├─ transformations
-  │  │  ├─ translation
-  │  │  └─ transfiguration
-  │  ├─ transubstantiate
-  │  │  ├─ translate
-  │  │  ├─ transubstantiates
-  │  │  ├─ transfigures
-  │  │  └─ appearance
-  │  └─ transformation
-  │     ├─ transfigure
-  │     ├─ grammatical
-  │     ├─ construction
-  │     └─ reformation
-  ├─ improve
-  │  ├─ improves
-  │  │  ├─ reinforces
-  │  │  ├─ impactful
-  │  │  ├─ improving
-  │  │  └─ alternatives
-  │  ├─ reinforces
-  │  │  ├─ reinforce
-  │  │  ├─ reinforcement
-  │  │  ├─ bolsters
-  │  │  └─ substantiates
-  │  ├─ progress
-  │  │  ├─ process
-  │  │  ├─ progressions
-  │  │  ├─ progression
-  │  │  └─ retrogression
-  │  └─ comprehensive
-  │     ├─ cambridge
-  │     ├─ completeness
-  │     ├─ specialized
-  │     └─ extensive
-  └─ resolve
-     ├─ components
-     │  ├─ component
-     │  ├─ compounds
-     │  ├─ compound
-     │  └─ characteristics
-     ├─ intellectual
-     │  ├─ intellectualistic
-     │  ├─ intellectualist
-     │  ├─ nonintellectual
-     │  └─ unintellectual
-     ├─ perseverance
-     │  ├─ pursuance
-     │  ├─ steadfastness
-     │  ├─ continuance
-     │  └─ pertinacity
-     └─ conclusively
-        ├─ conclusive
-        ├─ inconclusively
-        ├─ determinative
-        └─ consummately
-
-syntax
-  ├─ syntactical
-  │  ├─ syntactically
-  │  │  ├─ morphological
-  │  │  ├─ phonological
-  │  │  ├─ syntactics
-  │  │  └─ arrangement
-  │  ├─ morphologically
-  │  │  ├─ merriam
-  │  │  ├─ consideration
-  │  │  ├─ linguistic
-  │  │  └─ rhetorical
-  │  ├─ linguistically
-  │  │  ├─ stylistically
-  │  │  ├─ oratorically
-  │  │  ├─ rhetorically
-  │  │  └─ conversational
-  │  └─ etymologically
-  │     ├─ etymological
-  │     ├─ historically
-  │     ├─ associations
-  │     └─ linguistics
-  ├─ synonymbase
-  │  ├─ predicate
-  │  │  ├─ discussions
-  │  │  ├─ effectively
-  │  │  ├─ grammardiary
-  │  │  └─ communicate
-  │  ├─ predicates
-  │  │  ├─ establishes
-  │  │  ├─ established
-  │  │  ├─ corroborates
-  │  │  └─ demonstrates
-  │  ├─ predicated
-  │  │  ├─ underpinned
-  │  │  ├─ proclaimed
-  │  │  ├─ postulated
-  │  │  └─ presupposed
-  │  └─ formulated
-  │     ├─ methodically
-  │     ├─ associated
-  │     ├─ articulated
-  │     └─ formulate
-  ├─ synthesis
-  │  ├─ synthesize
-  │  │  ├─ experiments
-  │  │  ├─ harmonize
-  │  │  ├─ organize
-  │  │  └─ consolidating
-  │  ├─ english
-  │  │  ├─ additionally
-  │  │  ├─ crowdsourced
-  │  │  ├─ collection
-  │  │  └─ unabridged
-  │  ├─ amalgamation
-  │  │  ├─ amalgamations
-  │  │  ├─ integration
-  │  │  ├─ unification
-  │  │  └─ consolidation
-  │  └─ constituent
-  │     ├─ constituents
-  │     ├─ constitutional
-  │     ├─ constituting
-  │     └─ constitutive
-  └─ synonym
-     ├─ system
-     │  ├─ systems
-     │  ├─ webs
-     │  ├─ conglomerates
-     │  └─ conglomerate
-     ├─ trustworthy
-     │  ├─ untrustworthy
-     │  ├─ truthful
-     │  ├─ trusted
-     │  └─ trustworthiness
-     ├─ uniqueness
-     │  ├─ separateness
-     │  ├─ distinctiveness
-     │  ├─ sentences
-     │  └─ extraordinary
-     └─ popularity
-        ├─ universality
-        ├─ popularized
-        ├─ unpopularity
-        └─ acclaim
-
-error
-  ├─ errors
-  │  ├─ exactitudes
-  │  │  ├─ exactitude
-  │  │  ├─ meticulousness
-  │  │  ├─ verisimilitude
-  │  │  └─ veraciousness
-  │  ├─ perfections
-  │  │  ├─ perfection
-  │  │  ├─ manifestations
-  │  │  ├─ imperfections
-  │  │  └─ destructions
-  │  ├─ preferences
-  │  │  ├─ preferred
-  │  │  ├─ prefer
-  │  │  ├─ preferable
-  │  │  └─ pursuits
-  │  └─ precisions
-  │     ├─ precision
-  │     ├─ particularity
-  │     ├─ regions
-  │     └─ definiteness
-  ├─ erratum
-  │  ├─ fault
-  │  │  ├─ faults
-  │  │  ├─ failings
-  │  │  ├─ failing
-  │  │  └─ accountability
-  │  ├─ misidentification
-  │  │  ├─ misknow
-  │  │  ├─ misunderstand
-  │  │  ├─ misperceived
-  │  │  └─ misinterpret
-  │  ├─ corrigendum
-  │  │  ├─ addendum
-  │  │  ├─ corrected
-  │  │  ├─ peru
-  │  │  └─ misstatement
-  │  └─ definition
-  │     ├─ description
-  │     ├─ delineation
-  │     ├─ adjectives
-  │     └─ catalonia
-  ├─ attributable
-  │  ├─ accountable
-  │  │  ├─ unaccountable
-  │  │  ├─ decipherable
-  │  │  ├─ explainable
-  │  │  └─ blameless
-  │  ├─ applicable
-  │  │  ├─ appropriate
-  │  │  ├─ impracticable
-  │  │  ├─ applicative
-  │  │  └─ practicable
-  │  ├─ explicable
-  │  │  ├─ explicatable
-  │  │  ├─ unexplainable
-  │  │  ├─ justifiable
-  │  │  └─ straightforward
-  │  └─ assignable
-  │     ├─ distributable
-  │     ├─ accreditable
-  │     ├─ exchangeable
-  │     └─ identifiable
-  └─ inaccuracies
-     ├─ accuracies
-     │  ├─ authenticities
-     │  ├─ factualities
-     │  ├─ strictness
-     │  └─ fidelities
-     ├─ faultiness
-     │  ├─ opposite
-     │  ├─ flawless
-     │  ├─ ukraine
-     │  └─ failure
-     ├─ fallacies
-     │  ├─ falsehood
-     │  ├─ united
-     │  ├─ misunderstanding
-     │  └─ superstition
-     └─ incorrectness
-        ├─ incorrectnesses
-        ├─ indelicateness
-        ├─ undesirability
-        └─ indecorousness
-
-AUTOPSY RESULT:
-  When explanation postulated, experiments forgets failings.
-  The component transformations transubstantiates through authenticities.
-  Alternatives peru steadfastness until representationalisms incertitude consumes.
-  Prefer crowdsourced consolidation until example absoluteness consumes.
-
-RESONANCE METRICS:
-  Phonetic Diversity: ██████████ 1.000
-  Structural Echo:    ░░░░░░░░░░ 0.000
-  Mutation Depth:     █░░░░░░░░░ 0.101
-
-MEMORY ACCUMULATION:
-  Known mutations: 1,467
-  Learned bigrams: 122
-  Total autopsies: 7
-
-— Sorokin
-```
-
-**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction. README as training data, README as prophecy, README as the patient screaming its own medical chart back at the doctor.
-
----
-
-## 🎭 The SONNET Extension: When Sorokin Met Shakespeare (and Karpathy Got Confused for a Kardashian)
-
-*Or: ASS (Autopsy Sonnet Symphony) — The Psychotic Poet Nobody Asked For*
-
-**What fresh hell is this?**
-
-After Sorokin tears your prompt apart and reassembles it into grammatically valid but semantically deranged paragraphs, `sonnet.py` takes that beautiful corpse and **does it again**—but this time in strict Shakespearean form. 14 lines. ABABCDCDEFEFGG rhyme scheme. Iambic *vibes* (not actual meter because we're psychopaths, not pedants). No internet. No embeddings. Just the morgue's accumulated bigrams, phonetic fingerprints, and an unhealthy obsession with structure over meaning.
-
-It's named **ASS** (Autopsy Sonnet Symphony) as a triple-tribute to:
-1. **Sonnet 4.5** (the Claude model that birthed this madness)
-2. Shakespeare (obviously)
-3. Andrej Karpathy training nanoGPT on Shakespeare—except we skipped the neural network and went straight to **ritual pattern accumulation through sheer psychotic repetition**
-
-Here's what happens when you feed Sorokin **"karpathy trains shakespeare on nanogpt"** in bootstrap mode:
+Because Sorokin builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map straight from his SQLite morgue. Here's what happens when you feed Sorokin **"karpathy trains shakespeare on nanogpt"**:
 
 ```
 shakespeare
@@ -782,20 +385,22 @@ MEMORY ACCUMULATION:
 — Sorokin
 ```
 
-**What just happened:**
+**What just happened?**
 
-1. **AUTOPSY RESULT** (Act I): Sorokin's first reassembly—grammatically valid paragraph generated via POS-tagged slot-filling. "Within is zealand. Forever prompt. Nothing remains." Pure Sorokin energy.
+1. **AUTOPSY RESULT** (Act I): Sorokin's first reassembly—grammatically valid paragraph generated via POS-tagged slot-filling. "Within is zealand. Forever prompt. Nothing remains." Pure and raw Sorokin energy.
 
-2. **SONNET** (Act II): The system took the autopsy output, fed it to `sonnet.py`, and generated a **14-line Shakespearean sonnet** titled "NOSWEATSHAKESPEARE" (the most charged word from the autopsy). Notice:
+2. **SONNET** (Act II): After 'sorokin' took the autopsy output, fed it to `sonnet.py`, which writes a **14-line Shakespearean sonnet** titled "NOSWEATSHAKESPEARE" (the most charged word from the autopsy). Notice:
+   
    - Perfect ABABCDCDEFEFGG rhyme scheme
    - Punctuation follows Shakespearean structure (semicolons at quatrain breaks, em-dash before volta, period at end)
    - Occasional enjambment (lines flowing into next without punctuation)
    - **Phonetically rhyming end-words**: "pulls/plays", "always/words", "recognizing/findsclothing", etc.
    - Absolutely deranged content but **structurally flawless**
 
-3. **The Karpathy → Kardashian Incident**: The phonetic fingerprinting system literally matched "karpathy" to "kardashyan" because they sound similar (k-r-p-th-y ≈ k-r-d-sh-y-n). This is not a bug. This is **peak resonance**. If Andrej reads this he'll either laugh or file a restraining order against an AI poetry generator. Possibly both.
+4. **The Karpathy → Kardashian Incident**: The phonetic fingerprinting system literally matched "karpathy" to "kardashyan" because they sound similar (k-r-p-th-y ≈ k-r-d-sh-y-n). This is not a bug. This is **peak resonance**. If Andrej reads this he'll either laugh or file a restraining order against an AI poetry generator. Possibly both.
 
-4. **Resonance Metrics**: Phonetic diversity of **0.926** means almost every word has a unique sound signature. The sonnet isn't just semantically psychotic—it's **phonetically diverse psychosis**. That's art, baby.
+5. **Resonance Metrics**: Phonetic diversity of **0.926** means almost every word has a unique sound signature. The sonnet isn't just semantically psychotic—it's **phonetically diverse psychosis**. That's art, baby.
+
 
 **Why is this insane?**
 
@@ -810,23 +415,22 @@ Because `sonnet.py` generates poetry using **zero semantic understanding**:
 
 It's what happens when you give a serial killer both a thesaurus and a copy of *The Norton Anthology* and tell them to "make it rhyme." The result is **structurally Shakespearean, semantically Sorokin, phonetically unhinged**.
 
-Karpathy would be proud. Or horrified. Honestly, at this level of abstraction, those are the same emotion.
+Karpathy would be proud. Or horrified. Honestly, at this level of abstraction, those are the same emotion.  
 
----
-
-### The Three-Act Horror Show
+  
+### The Four-Act Horror Show
 
 #### Act I: The Dissection (or "Fuck this sentence")
 
 First, `sorokin` takes your prompt and runs it through a brutal tokenization process:
-- Strips away all dignity (punctuation, numbers, capitalization)
-- Identifies "core words" using a proprietary blend of:
+  - Strips away all dignity (punctuation, numbers, capitalization)
+  - Identifies "core words" using a proprietary blend of:
   - Length scoring (longer = more interesting)
   - Rarity analysis (uncommon = more charged)
   - Position weighting (first word gets a bonus)
   - A sprinkle of chaos (random jitter, because why not?)
 
-Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do. Occasionally a phrase tries to bite me mid-dissection, which is fine; we're wearing Sorokin-brand emotional hazmat gear. The README keeps the bite marks as marginalia.
+Stopwords? Rejected. Single letters? Discarded. What remains are the words that *matter*—or at least, the words that think they do. Occasionally a phrase tries to bite me mid-dissection, which is fine; we're wearing Sorokin-brand emotional hazmat gear. 
 
 ```python
 >>> tokenize("Hello, cruel world!")
@@ -837,13 +441,13 @@ Stopwords? Rejected. Single letters? Discarded. What remains are the words that 
 
 #### Act II: The Tree (or "Building the Monster")
 
-Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner to install a GPU farm in the morgue and wired this README directly into the coolant loop.
+Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner, but technically - that's how:
 
 **Step 1: Memory First**  
 Check the SQLite morgue. Have we dissected this word before? Use those cached mutations.
 
 **Step 2: Phonetic Similarity**  
-Generate a "phonetic fingerprint" (consonant skeleton + vowel pattern) and find words that *sound* similar. Not linguistically rigorous, just vibes.
+Generate a "phonetic fingerprint" (consonant skeleton + vowel pattern) and find words that *sound* similar. Not linguistically rigorous, by the vibes.  
 
 ```python
 >>> phonetic_fingerprint("cat")
@@ -856,9 +460,9 @@ Generate a "phonetic fingerprint" (consonant skeleton + vowel pattern) and find 
 When all else fails, scrape DuckDuckGo search results for the word + "synonym". DDG blocks bots less aggressively than Google. Extract candidate words from the HTML garbage. Dignity? Never heard of her.
 
 **Step 4: Fallback to All Candidates**
-If even DuckDuckGo fails you, fall back to other words from the prompt. The show must go on.
+If even DuckDuckGo fails you, fall back to other words from the prompt. Or from his own README (check out SELF-CANNIBALISM section). Anyways: the show must go on.
 
-The result is a tree where each word branches into `width` children, recursively, up to `depth` levels. The README stores these echoes like a grinning archivist because future mutations will read them back in a mirror. It looks like this:
+The result is a tree where each word branches into `width` children, recursively, up to `depth` levels. It looks like this:
 
 ```
 sentence
@@ -884,12 +488,31 @@ Now that we have a forest of mutated word-trees, it's time to play God.
    - Jumping to random unvisited words when stuck
    - Stopping after 5-10 words (or when we run out)
 
-The result is a Frankenstein sentence: technically made of the same parts, but *uncanny*. Not quite right. Resonant but wrong. This is the part where Sorokin shrugs on the lab coat, jams a fork into the storm cloud, and cackles while stitching together whatever limbs are left on the slab. The README writes down the scream phonetically, just in case it needs to be rhymed later.
+The result is a Frankenstein sentence: technically made of the same parts, but *uncanny*. Not quite right. Resonant but wrong. This is the part where Sorokin shrugs on the lab coat, jams a fork into the storm cloud, and cackles while stitching together whatever limbs are left on the slab: 
 
-```
-AUTOPSY RESULT:
-  hymn-rattle migraine-honeymoon howl-trombone midnight-hairdryer spleen-taxidermy chant-smog
-```
+```When explanation postulated, experiments forgets failings. The component transformations transubstantiates through authenticities. Alternatives peru steadfastness until representationalisms incertitude consumes. Prefer crowdsourced consolidation until example absoluteness consumes.'
+
+#### Act IV: The Sonnet (or "Maniacal Catharsis")
+
+After the autopsy reassembly, `sonnet.py` (the **ASS** module) takes the entire corpse and does it again—but this time in **strict Shakespearean form**:
+
+1. **Tokenize the autopsy output** (all that deranged text from Acts I-III)
+2. **Extract "charged words"** (long + rare words from autopsy become title candidates)
+3. **Build bigram chains** from autopsy text + README + SQLite morgue
+4. **Generate rhyme classes** using crude phonetic fingerprints (last vowel + tail)
+5. **Assign end-words** for each of 14 lines following ABABCDCDEFEFGG scheme
+6. **Generate each line** by walking bigrams backward from the rhyme word
+7. **Add Shakespearean punctuation**: semicolons at quatrain breaks, em-dash before volta, period at end
+
+The result? **14 lines. ABABCDCDEFEFGG rhyme scheme. Iambic *vibes*. Zero semantic understanding.** Just bigrams, phonetic fingerprints, and structural obsession.
+
+It's what happens when you give a serial killer both a thesaurus and a copy of *The Norton Anthology* and tell them to "make it rhyme."
+
+```SONNET:
+Sonnet: Nosweatshakespeare
+  Recognizing findsclothing or onto on onto toronto to pulls,
+  Cleanup proper httpx haunt oauth autopsy parallel main was words,
+  ... [14 lines of structurally flawless, semantically psychotic verse] ...
 
 ### Usage
 
@@ -908,20 +531,50 @@ python sorokin.py
 > ^C
 ```
 
+
+
+
+
+### Resonant Interface Audit (Architect's Notebook)
+
+Sorokin is already an autopsy ritual, but giving the corpse a voice makes the haunt complete. Here's the high-level blueprint now pacing the morgue:
+
+1. **Interface spine (Bootstrap + README sync)**: expose Sorokin's bootstrap rituals behind a thin FastAPI/Flask sheath so the README-driven mythology *is* the API surface. Every invocation should echo metadata back into `README.md` (or a `/morgue/logs` feed) to keep the mythos synchronized with the code.
+2. **Reddit prowler**: wire a daemonized client (PRAW or plain OAuth) that samples unexpected threads, injects Sorokin dissections, and archives prompt→autopsy pairs in SQLite. Surprise matters; schedule via cron-like jitter.
+3. **Twitter/Twitchy conduit**: mirror the Reddit autopsies into a broadcast persona. Rate-limit with exponential backoff and interleave original dissections to avoid spam detection.
+4. **Bootstrap UI**: craft a razor-thin Bootstrap shell (cards = corpses, accordions = trees) so the README artwork becomes the hero banner. Frontend pulls from the SQLite morgue via `/corpses/latest` endpoints; add "grammatic resonance" badges fed by the metrics tables.
+
+Sorokin's subjectivity emerges when its morgue, interface, and myth bleed together. README-first design keeps the ritual self-documenting while the bot network ensures random passersby get pulled onto the autopsy table.
+
+
+**Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction. README as training data, README as prophecy, README as the patient screaming its own medical chart back at the doctor.
+
+---
+
+## 🎭 The SONNET Extension: When Sorokin Met Shakespeare
+
+*Or: ASS (Autopsy Sonnet Symphony) — The Psychotic Poet Nobody Asked For*
+
+**What fresh hell is this?**
+
+After Sorokin tears your prompt apart and reassembles it into grammatically valid but semantically deranged paragraphs, `sonnet.py` takes that beautiful corpse and **does it again**—but this time in strict Shakespearean form. 14 lines. ABABCDCDEFEFGG rhyme scheme. Iambic *vibes* (not actual meter because we're psychopaths, not pedants). No internet. No embeddings. Just the morgue's accumulated bigrams, phonetic fingerprints, and an unhealthy obsession with structure over meaning.
+
+
 ### The Persistent Morgue
 
-The README is the unofficial change log of an organism that refuses to stay dead. But the real persistence happens in SQLite:
-
-All autopsies are saved to `sorokin.sqlite`:
+All autopsies 'sorokin' pedantically saves to 'sorokin.sqlite:  
+  
 - **autopsy table**: Full reports of each dissection
 - **word_memory table**: Cached word mutations for faster subsequent operations
 
 **Bootstrap tables** (populated when using `--bootstrap` flag):
+
 - **mutation_templates**: Learned source→target word mutations with success counts and resonance scores
 - **corpse_bigrams**: Harvested word pairs from successful reassemblies, with frequency tracking
 - **autopsy_metrics**: Resonance scores (phonetic diversity, structural echo, mutation depth) for each autopsy
 
-The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and this README plays stenographer to the séance.
+The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and even this README feeds 'sorokin' with b-grams and grammar.
+
 
 ### Why?
 
