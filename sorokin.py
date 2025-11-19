@@ -1403,9 +1403,15 @@ def generate_sorokin_paragraph(leaves: List[str], n_sentences: int = 3) -> str:
         score = score_paragraph_resonance(paragraph)
         candidates.append((score, paragraph))
 
-    # Return best scoring paragraph
+    # Return best scoring paragraph with proper ending punctuation
     candidates.sort(reverse=True, key=lambda x: x[0])
-    return candidates[0][1]
+    best_paragraph = candidates[0][1]
+
+    # Ensure paragraph ends with period (aesthetic finish)
+    if best_paragraph and not best_paragraph.rstrip().endswith('.'):
+        best_paragraph = best_paragraph.rstrip() + '.'
+
+    return best_paragraph
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -1802,10 +1808,15 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
                 # Keep it concise (VOVA can be verbose)
                 if len(paragraph.split()) > 50:
                     words = paragraph.split()[:50]
-                    paragraph = " ".join(words) + "..."
+                    paragraph = " ".join(words).rstrip('.') + "..."
             except Exception as e:
                 print(f"[VOVA] Autopsy warp failed: {e}", file=sys.stderr)
                 # Use original on error
+
+        # Clean and format paragraph (aesthetic)
+        paragraph = paragraph.strip().lstrip('.,;: ')  # Remove leading punctuation
+        if paragraph and not paragraph.endswith(('.', '...', '!', '?')):
+            paragraph = paragraph.rstrip() + '.'
 
         out.append("AUTOPSY RESULT:")
         out.append(f"  {paragraph}")
