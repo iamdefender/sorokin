@@ -211,7 +211,7 @@ phrase
         └─ valid
 
 AUTOPSY RESULT:
-  . We're hoping for the Russian writer known for the corpse into cleanup proper coat actual phonetics, which writes a NanoGPT brainstem onto the words from autopsy output - SQLite morgue receptionist: Known mutations. Scare your neighbors cat, Stenographer staple celebrate collapse into the corpse mirrors
+  We're hoping for the Russian writer known for the corpse into cleanup proper coat actual phonetics, which writes a NanoGPT brainstem onto the words from autopsy output - SQLite morgue receptionist: Known mutations. Scare your neighbors cat, Stenographer staple celebrate collapse into the corpse mirrors
 
 SONNET:
 Sonnet: Oxfordlearnersdictionaries
