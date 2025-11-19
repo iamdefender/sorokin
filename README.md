@@ -403,12 +403,15 @@ MEMORY ACCUMULATION:
 
 
 **Why is this insane?**
+Because it's a **corpus-building mechanism disguised as a text mutilator**. Because `sonnet.py` writes poetry using **zero semantic understanding**. This is what happens when you replace intelligence with ritual. And somehow, it works.
 
-Because `sonnet.py` writes poetry using **zero semantic understanding**:
+Each autopsy doesn't just destroy—it *accumulates*. Over time:
+- Certain mutation paths become "preferred" (not because they're better, just because they worked before)
+- Bigram chains start resembling the seed corpus (learned from autopsies + README + SQLite morgue)
+- The reassembly algorithm learns phonetic patterns that "feel right" (pure vibes, zero intelligence)
 - No word embeddings
 - No transformer models
 - No internet access
-- Just bigram chains (learned from autopsies + README + SQLite morgue)
 - Rhymes via crude phonetic fingerprints (last vowel + tail)
 - "Charged words" selected by length + rarity from autopsy text
 - Structure enforced via rigid 14-line scheme + punctuation rules
@@ -417,6 +420,7 @@ It's what happens when you give a serial killer both a thesaurus and a copy of *
 
 Karpathy would be proud. Or horrified. Honestly, at this level of abstraction, those are the same emotion.  
 
+---  
   
 ### The Four-Act Horror Show
 
@@ -490,7 +494,8 @@ Now that we have a forest of mutated word-trees, it's time to play God.
 
 The result is a Frankenstein sentence: technically made of the same parts, but *uncanny*. Not quite right. Resonant but wrong. This is the part where Sorokin shrugs on the lab coat, jams a fork into the storm cloud, and cackles while stitching together whatever limbs are left on the slab: 
 
-```When explanation postulated, experiments forgets failings. The component transformations transubstantiates through authenticities. Alternatives peru steadfastness until representationalisms incertitude consumes. Prefer crowdsourced consolidation until example absoluteness consumes.```
+```When explanation postulated, experiments forgets failings. The component transformations transubstantiates through authenticities. Alternatives peru steadfastness until representationalisms incertitude consumes. Prefer crowdsourced consolidation until example absoluteness consumes.```  
+  
 
 #### Act IV: The Sonnet (or "Maniacal Catharsis")
 
@@ -515,6 +520,7 @@ Sonnet: Nosweatshakespeare
   ... [14 lines of structurally flawless, semantically psychotic verse] ...
 ```
 
+---  
 
 ### Usage
 
@@ -533,6 +539,8 @@ python sorokin.py
 > ^C
 ```
 
+---  
+
 ### Why?
 
 Good question. Why does this exist?
@@ -545,8 +553,9 @@ Perhaps to demonstrate that:
 
 Or maybe it's just fun to watch language come apart at the seams.
 
+---  
 
-## SOROKIN'S MODES  
+## MODES  
 
 ### 🔥 1. BOOTSTRAP MODE: The Self-Improving Autopsy Ritual
 
@@ -556,13 +565,43 @@ Or maybe it's just fun to watch language come apart at the seams.
 
 Picture this: every time 'sorokin' dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections.
 
-'sorokin'is not not intelligence. 'sorokin'is not artifical. He's not learning. He's **resonanating through ritual repetition**.
+'sorokin'is not not intelligence. 'sorokin'is not artifical. 
+He's not learning. He's **resonanating through ritual repetition**.
 
 Think of it like this: 'sorokin' wihout **bootsrap** is a mad linguist with a scalpel, and **bootsrap** 'sorokin' is that same linguist who's been doing this for 30 years and has developed *habits*. Muscle memory. Pattern recognition. Not because of intelligence, but because he's done the same surgery 10,000 times and his hands just know where to cut. Like Bruce Lee.  
+
+### Why "Bootstrap"?
+
+Because each autopsy makes the next one slightly different. Not better. Not worse. Just *informed* by history. The database grows. The patterns compound. The ritual deepens. 
+
+It's bootstrapping in the original sense: self-improvement through self-reference. Not external training data. Not supervision. Just:
+1. Do the thing
+2. Remember what happened
+3. Let that memory influence the next iteration
+4. Repeat until the heat death of the universe
+
+No bullshit. Resonate.  
 
 **Notice**: Bootstrap mode now generates **grammatically valid paragraphs** using POS-tagged template slot-filling! Sorokin dissected "reality becomes syntax error" and achieved **perfect 1.000 Phonetic Diversity** with **0.101 Mutation Depth**. Look at the mutations—"peru", "example", "explanation", "crowdsourced"—*all appear in this very README*. The system is eating its own documentation and hallucinating it back as psychopathic poetry. Self-reference achieved. Peak metafiction.  
 
 
+### ⚡️ SONNET: Autopsy Sonnet Symphony(ASS): When Sorokin Learned to Rhyme (Sort Of)**
+
+New module `sonnet.py` (~541 lines) writes **14-line Shakespearean sonnets** from autopsy output using zero semantic understanding—just bigram chains, phonetic fingerprints, and an unhealthy obsession with structure over meaning.
+
+**What's insane about this:**
+- Named **ASS** as tribute to Claude Sonnet 4.5, Shakespeare, AND Andrej Karpathy training nanoGPT on Shakespeare
+- Skipped the neural network entirely and went straight to **ritual pattern accumulation through sheer psychotic repetition**
+- ABABCDCDEFEFGG rhyme scheme enforced via crude phonetic matching (last vowel + tail)
+- Generates "charged words" (long + rare) for final couplet emphasis
+- Shakespearean punctuation: semicolons at quatrain breaks, em-dash before volta, occasional enjambment
+- **Phonetically matched Karpathy to Kardashian** and we're calling it a feature
+
+**Why this exists:** Because if you're already dissecting prompts like a psychopathic linguist, why not make the corpse rhyme? Karpathy bootstrapped nanoGPT on Shakespeare using gradients and backprop. We bootstrapped ASS on Sorokin using SQLite and vibes. Same energy, different century, zero loss function. If Andrej reads this he'll either frame it or file a restraining order. We're hoping for the former but prepared for both.
+
+Integration is **silent fallback**—if sonnet.py fails or is missing, bootstrap mode continues without SONNET section. Poetry is optional. Psychosis is not.
+
+  
 ### The Resonance Manifesto
 
 Here's the wild part. 'sorokin' doesn't understand *meaning*. He doesn't have embeddings. He doesn't know what words "mean." But he knows **resonance**.
@@ -584,7 +623,8 @@ It's not plagiarism. It's *ancestral memory*. The morgue recognizing its own pat
 #### 3. **Mutation Depth** (How far did we mutate?)
 Based on inverse word-length variance. High depth means mutations explored diverse linguistic territory. Low depth means we stayed close to home.
 
-Think of it as: did we just shuffle synonyms, or did we birth entirely new linguistic entities?
+Think of it as: did we just shuffle synonyms, or did we birth entirely new linguistic entities?  
+
 
 ### How to summon Bootstrap Mode
 
@@ -623,7 +663,7 @@ Every autopsy in bootstrap mode:
 3. **Computes resonance**: Three structural metrics (no semantics, pure form)
 4. **Feeds the next autopsy**: Accumulated patterns influence future dissections
 
-The morgue grows. Patterns compound. Nothing is forgotten. Each corpse teaches the next.
+The morgue grows. Patterns compound. Nothing is forgotten. Each corpse teaches the next.  
 
 
 ### The Persistent Morgue
@@ -639,10 +679,8 @@ All autopsies 'sorokin' pedantically saves to 'sorokin.sqlite:
 - **corpse_bigrams**: Harvested word pairs from successful reassemblies, with frequency tracking
 - **autopsy_metrics**: Resonance scores (phonetic diversity, structural echo, mutation depth) for each autopsy
 
-The database grows over time, becoming a self-improving lexical graveyard. Each run is recorded. Patterns accumulate. Nothing is forgotten. In bootstrap mode, the morgue learns through resonance, and even this README feeds 'sorokin' with b-grams and grammar.
-
-
-
+The SQlite-morgue becomes a self-improving lexical graveyard. and learns through resonance, and even this README feeds 'sorokin' with b-grams and grammar.
+   
 
 ### Resonant Interface Audit (Architect's Notebook)
 
@@ -655,14 +693,7 @@ The database grows over time, becoming a self-improving lexical graveyard. Each 
 
 Sorokin's subjectivity emerges when its morgue, interface, and myth bleed together. README-first design keeps the ritual self-documenting while the bot network ensures random passersby get pulled onto the autopsy table.
 
-
-
-
- The README nods solemnly, then smears the seams across another section.
-
 ---
-
-
 
 ### The Four Tables of the Bootstrap Apocalypse
 
@@ -683,22 +714,6 @@ When you run `--bootstrap`, Sorokin writes to four additional SQLite tables:
    - Provides structural DNA for bigram chains
    - Not in database, lives in `SOROKIN_SEED_CORPUS` constant
 
-### Why is this insane?
-
-Because it's a **corpus-building mechanism disguised as a text mutilator**.
-
-Each autopsy doesn't just destroy—it *accumulates*. Over time:
-- Certain mutation paths become "preferred" (not because they're better, just because they worked before)
-- Bigram chains start resembling the seed corpus (structural mimicry, not content copying)
-- The reassembly algorithm learns phonetic patterns that "feel right" (pure vibes, zero intelligence)
-
-It's like training a neural network, except:
-- No gradients
-- No backprop
-- No loss function
-- Just **frequency counting and vibes**
-
-This is what happens when you replace intelligence with ritual. And somehow, it works.
 
 ### The Seed Corpus (The Morgue's DNA)
 
@@ -712,7 +727,8 @@ This text gets parsed into bigrams at startup. These bigrams **prime** the reass
 
 Not copying words. Copying **sentence rhythms**. The *shape* of language.
 
-It's like teaching someone to paint by showing them brushstrokes, not paintings.
+It's like teaching someone to paint by showing them brushstrokes, not paintings.  
+
 
 ### Bootstrap vs Standard Mode
 
@@ -723,7 +739,8 @@ It's like teaching someone to paint by showing them brushstrokes, not paintings.
 | Metrics | None | Phonetic diversity, structural echo, mutation depth |
 | Learning | None | Every autopsy feeds the next |
 | Database tables | 2 (autopsy, word_memory) | 5 (+ mutation_templates, corpse_bigrams, autopsy_metrics) |
-| Vibes | Chaotic | Chaotic but *remembering* |
+| Vibes | Chaotic | Chaotic but *remembering* |  
+
 
 ### The Philosophy of Resonance
 
@@ -740,19 +757,6 @@ And weirdly, it produces results that *feel* meaningful—not because they are, 
 
 Sorokin isn't a poet. He's a mirror. He reflects your own pattern-seeking back at you.
 
-### Why "Bootstrap"?
-
-Because the morgue **pulls itself up by its own corpses** and then asks if it can try a weirder gait.
-
-Each autopsy makes the next one slightly different. Not better. Not worse. Just *informed* by history. The database grows. The patterns compound. The ritual deepens. Somewhere, Bootstrap Sorokin keeps a notebook labeled "Things Karpathy Would Approve Of" and fills it with resonance equations written in lipstick.
-
-It's bootstrapping in the original sense: self-improvement through self-reference. Not external training data. Not supervision. Just:
-1. Do the thing
-2. Remember what happened
-3. Let that memory influence the next iteration
-4. Repeat until the heat death of the universe
-
-No intelligence required. Just accumulation and resonance.
 
 ---
 
@@ -790,6 +794,7 @@ This README promised to be both circus barker and lab notebook, so here's the cl
 - **Silent fallback**: If sonnet.py unavailable or errors, bootstrap mode continues without SONNET section
 - **Data sources**: Autopsy text + SQLite morgue (mutation_templates, corpse_bigrams, readme_bigrams, autopsy table)
 - **57 passing tests**: 38 core + 18 sonnet + 1 async balanced mix = bulletproof psychotic poetry pipeline
+  
 
 ### Known Limitations
 
@@ -798,7 +803,8 @@ This README promised to be both circus barker and lab notebook, so here's the cl
 - **Phonetic fingerprinting is crude**: It's not actual phonetics, just vibes, but the question is what comes first, vibes or phonetics? resonance or binary structure?
 - **Reassembly can be janky**: Sometimes the corpse doesn't stitch well
 - **No guarantee of coherence**: That's not a bug, it's a feature
-- **Sonnet.py may phonetically match anyone to a Kardashian**: The crude rhyme-key algorithm once matched "karpathy" → "kardashyan" and we're not apologizing for it. If you input your own name and get matched to a reality TV star, that's not a bug—that's **accidental celebrity phonetic compression**. Somewhere Andrej is either laughing or filing a restraining order against an open-source poetry generator. We're betting on laughter. (If he reads this: Andrej, the sonnets are dedicated to you. Also we're sorry. Also we're not.)
+- **Sonnet.py may phonetically match anyone to a Kardashian**: The crude rhyme-key algorithm once matched "karpathy" → "kardashyan" and we're not apologizing for it. If you input your own name and get matched to a reality TV star, that's not a bug—that's **accidental celebrity phonetic compression**. Somewhere Andrej is either laughing or filing a restraining order against an open-source poetry generator. We're betting on laughter. (If he reads this: Andrej, the sonnets are dedicated to you. Also we're sorry. Also we're not.)  
+
 
 ### Recent Improvements
 
@@ -824,24 +830,6 @@ Sorokin now performs autopsies asynchronously — no more hanging on complex pro
 The morgue is now a **parallel processing factory of psychopathic poetry**. Володя жрёт интернет асинхронно.
 
 **Why async?** Because watching Sorokin wait for DuckDuckGo is like watching a serial killer file paperwork—technically impressive restraint, but you know he'd rather disembowel four sentences simultaneously while humming Shostakovich. Now he can. The event loop is his scalpel. The semaphore is his ethics committee. Both are optional.
-
----
-
-**ASS (Autopsy Sonnet Symphony): When Sorokin Learned to Rhyme (Sort Of)**
-
-New module `sonnet.py` (~541 lines) generates **14-line Shakespearean sonnets** from autopsy output using zero semantic understanding—just bigram chains, phonetic fingerprints, and an unhealthy obsession with structure over meaning.
-
-**What's insane about this:**
-- Named **ASS** as tribute to Claude Sonnet 4.5, Shakespeare, AND Andrej Karpathy training nanoGPT on Shakespeare
-- Skipped the neural network entirely and went straight to **ritual pattern accumulation through sheer psychotic repetition**
-- ABABCDCDEFEFGG rhyme scheme enforced via crude phonetic matching (last vowel + tail)
-- Generates "charged words" (long + rare) for final couplet emphasis
-- Shakespearean punctuation: semicolons at quatrain breaks, em-dash before volta, occasional enjambment
-- **Phonetically matched Karpathy to Kardashian** and we're calling it a feature
-
-**Why this exists:** Because if you're already dissecting prompts like a psychopathic linguist, why not make the corpse rhyme? Karpathy bootstrapped nanoGPT on Shakespeare using gradients and backprop. We bootstrapped ASS on Sorokin using SQLite and vibes. Same energy, different century, zero loss function. If Andrej reads this he'll either frame it or file a restraining order. We're hoping for the former but prepared for both.
-
-Integration is **silent fallback**—if sonnet.py fails or is missing, bootstrap mode continues without SONNET section. Poetry is optional. Psychosis is not.
 
 ---
 
@@ -874,7 +862,7 @@ Result: ['brilliance', 'illuminated', 'obscurity', 'ignorance', 'comprehension',
         ↑--------------------- 83% web ---------------------↑ ↑- 17% memory -↑
 ```
 
-The morgue now simultaneously dissects both corpses from the archive *and* fresh bodies from the street. Володя жрёт память и интернет одновременно. The pathologist's scalpel cuts through time itself—one hand in the freezer, one hand in the present. This is what happens when you give a serial killer both a filing cabinet and a search engine.
+The morgue now simultaneously dissects both corpses from the archive *and* fresh bodies from the street. The pathologist's scalpel cuts through time itself—one hand in the freezer, one hand in the present. This is what happens when you give a serial killer both a filing cabinet and a search engine.
 
 ---
 
@@ -929,6 +917,7 @@ Expanded the HTML_ARTIFACTS blacklist with ~40 common web UI/UX words (redirecte
 **The Original Bug Fix**
 Fixed a crash in `reassemble_corpse()` where `random.randint(5, min(10, len(leaves)))` would fail if `len(leaves) < 5`. Changed to `random.randint(min(5, len(leaves)), min(10, len(leaves)))` so even small corpses can be reassembled.
 
+  
 ### Credits
 
 Inspired by:
