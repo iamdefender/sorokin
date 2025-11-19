@@ -35,7 +35,7 @@ Named after Vladimir Sorokin, the Russian writer known for his transgressive and
 Because `sorokin` builds trees vertically like a linguo-necromancer performing open-heart surgery on reality itself, here's a full corpse-map from the morgue. Feed `sorokin` **"destroy the sentence"** (warped through VOVA's README resonance field into "Sentence phrase tries transgressive and Love the reassembled text for his own documentation...") and witness the meta-cannibalism:
 
 ```
-Sentence phrase tries transgressive and Love the reassembled text for his own documentation and a li
+> Sentence phrase tries transgressive and Love the reassembled text for his own documentation and a li
 
 reassembled
   ├─ text
@@ -298,7 +298,7 @@ Stopwords? Rejected. Single letters? Discarded. What remains are the words that 
 Now comes the fun part. For each core word, `sorokin` carefully grows a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner, but technically, here's how:
 
 **Step 1: Memory First**  
-Check the SQLite morgue. Have we dissected this word before? Use those cached mutations.
+`sorokin` checks the SQLite morgue. Has he dissected this word before? Use those cached mutations.
 
 **Step 2: Phonetic Similarity**
 Generate a "phonetic fingerprint" (consonant skeleton + vowel pattern) and find words that *sound* similar. Not linguistically rigorous, just vibes.  
@@ -414,6 +414,7 @@ Or maybe it's just fun to watch language come apart at the seams.
 Picture this: every time 'sorokin' dissects a prompt, he doesn't just throw the body parts in the trash. No. He's a *hoarder*. He saves every successful mutation, every word-pair, every pattern of collapse into his SQLite morgue. Then—and here's where it gets freaky—he uses those accumulated corpses to inform *future* dissections.
 
 'sorokin' is not intelligence. 'sorokin' is not artificial.
+
 He's not learning. He's **resonating through ritual repetition**.
 
 Think of it like this: 'sorokin' without **bootstrap** is a mad linguist with a scalpel, and **bootstrap** 'sorokin' is that same linguist who's been doing this for 30 years and has developed *habits*. Muscle memory. Pattern recognition. Not because of intelligence, but because he's done the same surgery 10,000 times and his hands just know where to cut. Like Bruce Lee.  
