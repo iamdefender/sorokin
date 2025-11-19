@@ -208,3 +208,6 @@ __marimo__/
 
 # Sorokin SQLite database
 sorokin.sqlite
+
+# Vova resonance field
+.vova/
