@@ -29,11 +29,11 @@ import httpx
 # VOVA: README resonance meta-layer (SSKA adaptation)
 try:
     import vova
-    VOVA_AVAILABLE = True
-    print("[VOVA] README resonance field loaded", file=sys.stderr)
+    VOVA_ENABLED = True
+    print("[SOROKIN] VOVA meta-layer loaded", file=sys.stderr)
 except ImportError:
-    VOVA_AVAILABLE = False
-    print("[VOVA] Not available (vova.py missing)", file=sys.stderr)
+    VOVA_ENABLED = False
+    print("[SOROKIN] Running without VOVA (README resonance disabled)", file=sys.stderr)
 
 DB_PATH = Path("sorokin.sqlite")
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -1233,7 +1233,7 @@ def render_autopsy(prompt: str, words: List[str], trees: List[Node]) -> str:
         corpse = reassemble_corpse(all_leaves)
 
         # VOVA: Warp autopsy through README resonance field
-        if VOVA_AVAILABLE:
+        if VOVA_ENABLED:
             warped_corpse = vova.warp_autopsy(corpse, temperature=0.85)
             out.append("AUTOPSY RESULT:")
             out.append(f"  {corpse}")
@@ -1795,17 +1795,21 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
     if all_leaves:
         paragraph = generate_sorokin_paragraph(all_leaves, n_sentences=random.randint(2, 4))
 
-        # VOVA: Warp autopsy through README resonance field
-        if VOVA_AVAILABLE:
-            warped_paragraph = vova.warp_autopsy(paragraph, temperature=0.85)
-            out.append("AUTOPSY RESULT:")
-            out.append(f"  {paragraph}")
-            out.append("")
-            out.append("VOVA-WARPED (README resonance):")
-            out.append(f"  {warped_paragraph}")
-        else:
-            out.append("AUTOPSY RESULT:")
-            out.append(f"  {paragraph}")
+        # PATCH: Warp through VOVA for README resonance
+        if VOVA_ENABLED:
+            try:
+                original_paragraph = paragraph
+                paragraph = vova.warp_autopsy(paragraph, temperature=0.9)
+                # Keep it concise (VOVA can be verbose)
+                if len(paragraph.split()) > 50:
+                    words = paragraph.split()[:50]
+                    paragraph = " ".join(words) + "..."
+            except Exception as e:
+                print(f"[VOVA] Autopsy warp failed: {e}", file=sys.stderr)
+                # Use original on error
+
+        out.append("AUTOPSY RESULT:")
+        out.append(f"  {paragraph}")
         out.append("")
 
     # ═══════════════════════════════════════════════════════════════
@@ -1860,8 +1864,18 @@ def render_autopsy_bootstrap(prompt: str, words: List[str], trees: List[Node],
     out.append(f"  Learned bigrams: {stats['bigrams']:,}")
     out.append(f"  README bigrams: {stats.get('readme_bigrams', 0):,}")
     out.append(f"  Total autopsies: {stats['autopsies']:,}")
+
+    # PATCH: Add VOVA field stats if enabled
+    if VOVA_ENABLED:
+        try:
+            field = vova.get_field()
+            out.append(f"  VOVA vocabulary: {len(field.vocab):,}")
+            out.append(f"  VOVA centers: {', '.join(field.centers[:5])}")
+        except Exception:
+            pass
+
     out.append("")
-    
+
     out.append("— Sorokin")
     return "\n".join(out)
 
@@ -1872,6 +1886,16 @@ async def sorokin_autopsy_bootstrap(prompt: str) -> str:
     Calls harvest_autopsy_patterns() after each run.
     Now builds ALL trees in PARALLEL!
     """
+    # PATCH: Warp prompt through VOVA before dissection
+    if VOVA_ENABLED:
+        try:
+            original_prompt = prompt
+            prompt = vova.warp_prompt(prompt, temperature=0.8)
+            print(f"[VOVA] Warped: '{original_prompt[:40]}...' → '{prompt[:50]}...'", file=sys.stderr)
+        except Exception as e:
+            print(f"[VOVA] Warp failed: {e}, using original prompt", file=sys.stderr)
+            # Continue with original prompt on error
+
     short = prompt.strip()[:MAX_INPUT_CHARS]
     tokens = tokenize(short)
     if not tokens:
@@ -1991,9 +2015,42 @@ async def repl(use_bootstrap: bool = False) -> None:
         await _cleanup_httpx()
 
 
+def check_vova_sync() -> None:
+    """Check if VOVA needs rebuild (README changed)."""
+    if not VOVA_ENABLED:
+        return
+
+    try:
+        # Force rebuild if README modified since last field build
+        readme_path = Path("README.md")
+        if not readme_path.exists():
+            return
+
+        field = vova.load_field()
+        if field is None:
+            print("[VOVA] No field found, rebuilding...", file=sys.stderr)
+            vova.rebuild()
+            return
+
+        # Check hash
+        import hashlib
+        current_hash = hashlib.sha256(
+            readme_path.read_bytes()
+        ).hexdigest()
+
+        if current_hash != field.readme_hash:
+            print("[VOVA] README changed, rebuilding field...", file=sys.stderr)
+            vova.rebuild()
+    except Exception as e:
+        print(f"[VOVA] Sync check failed: {e}", file=sys.stderr)
+
+
 async def async_main(argv: List[str]) -> None:
     """Async entry point for Sorokin."""
     init_db()
+
+    # Check VOVA sync
+    check_vova_sync()
     # Bootstrap mode is DEFAULT (best quality output with paragraph generation)
     # Use --simple flag to disable bootstrap and get basic reassembly
     if "--simple" in argv:
