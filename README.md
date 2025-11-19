@@ -387,7 +387,7 @@ MEMORY ACCUMULATION:
 
 **What just happened?**
 
-1. **AUTOPSY RESULT** (Acts I-III result): sorokin's first reassembly—grammatically valid paragraph generated via POS-tagged slot-filling. "Within is zealand. Forever prompt. Nothing remains." Pure and raw Sorokin energy.
+1. **AUTOPSY RESULT** (Acts I-III result): sorokin's first reassembly—grammatically valid paragraph written via POS-tagged slot-filling. "Within is zealand. Forever prompt. Nothing remains." Pure and raw Sorokin energy.
 
 2. **SONNET** (Act IV): After `sorokin` took the autopsy output, fed it to `sonnet.py`, which writes a **14-line Shakespearean sonnet** titled "NOSWEATSHAKESPEARE" (the most charged word from the autopsy). Notice:
    
@@ -397,7 +397,7 @@ MEMORY ACCUMULATION:
    - **Phonetically rhyming end-words**: "pulls/plays", "always/words", "recognizing/findsclothing", etc.
    - Absolutely deranged content but **structurally flawless**
 
-4. **The Karpathy → Kardashian Incident**: The phonetic fingerprinting system literally matched "karpathy" to "kardashyan" because they sound similar (k-r-p-th-y ≈ k-r-d-sh-y-n). This is not a bug. This is **peak resonance**. If Andrej reads this he'll either laugh or file a restraining order against an AI poetry generator. Possibly both.
+4. **The Karpathy → Kardashian Incident**: The phonetic fingerprinting system literally matched "karpathy" to "kardashyan" because they sound similar (k-r-p-th-y ≈ k-r-d-sh-y-n). This is not a bug. This is **peak resonance**. If Andrej reads this he'll either laugh or file a restraining order against an AI-poet. Possibly both.
 
 5. **Resonance Metrics**: Phonetic diversity of **0.926** means almost every word has a unique sound signature. The sonnet isn't just semantically psychotic—it's **phonetically diverse psychosis**. That's art, baby.
 
@@ -486,7 +486,7 @@ Now that we have a forest of mutated word-trees, it's time to play God.
 
 1. **Collect all leaf nodes** from the trees (the final mutations at the bottom)
 2. **Build a bigram chain** (word1 → [possible_next_words])
-3. **Generate a new "sentence"** by:
+3. **Create a new "sentence"** by:
    - Starting with a random leaf
    - Following bigram chains when available
    - Jumping to random unvisited words when stuck
@@ -504,9 +504,9 @@ After the autopsy reassembly, `sonnet.py` (the **ASS** module) takes the entire 
 1. **Tokenize the autopsy output** (all that deranged text from Acts I-III)
 2. **Extract "charged words"** (long + rare words from autopsy become title candidates)
 3. **Build bigram chains** from autopsy text + README + SQLite morgue
-4. **Generate rhyme classes** using crude phonetic fingerprints (last vowel + tail)
+4. **Find rhyme classes** using crude phonetic fingerprints (last vowel + tail)
 5. **Assign end-words** for each of 14 lines following ABABCDCDEFEFGG scheme
-6. **Generate each line** by walking bigrams backward from the rhyme word
+6. **Build each line** by walking bigrams backward from the rhyme word
 7. **Add Shakespearean punctuation**: semicolons at quatrain breaks, em-dash before volta, period at end
 
 The result? **14 lines. ABABCDCDEFEFGG rhyme scheme. Iambic *vibes*. Zero semantic understanding.** Just bigrams, phonetic fingerprints, and structural obsession.
@@ -591,7 +591,7 @@ New module `sonnet.py` (~541 lines) writes **14-line Shakespearean sonnets** fro
 - Named **ASS** as tribute to Claude Sonnet 4.5, Shakespeare, AND Andrej Karpathy training nanoGPT on Shakespeare
 - Skipped the neural network entirely and went straight to **ritual pattern accumulation through sheer psychotic repetition**
 - ABABCDCDEFEFGG rhyme scheme enforced via crude phonetic matching (last vowel + tail)
-- Generates "charged words" (long + rare) for final couplet emphasis
+- Assembles "charged words" (long + rare) for final couplet emphasis
 - Shakespearean punctuation: semicolons at quatrain breaks, em-dash before volta, occasional enjambment
 - **Phonetically matched Karpathy to Kardashian** and we're calling it a feature
 
@@ -719,7 +719,7 @@ This README promised to be both circus barker and lab notebook, so here's the cl
   - **Four additional database tables**: mutation_templates, corpse_bigrams, autopsy_metrics, plus seed corpus in code
 
 **sonnet.py (~541 lines):**
-- **ASS (Autopsy Sonnet Symphony)**: Generates 14-line Shakespearean sonnets from autopsy output
+- **ASS (Autopsy Sonnet Symphony)**: Composes 14-line Shakespearean sonnets from autopsy output
 - **Zero semantic understanding**: No embeddings, no transformers, no internet—just bigram chains and phonetic fingerprints
 - **Strict structure enforcement**: ABABCDCDEFEFGG rhyme scheme, Shakespearean punctuation (semicolons, em-dashes, enjambment)
 - **Rhyme matching**: Crude phonetic fingerprints (last vowel + tail) to find rhyming end-words
@@ -737,7 +737,7 @@ This README promised to be both circus barker and lab notebook, so here's the cl
 - **Phonetic fingerprinting is crude**: It's not actual phonetics, just vibes, but the question is what comes first, vibes or phonetics? resonance or binary structure?
 - **Reassembly can be janky**: Sometimes the corpse doesn't stitch well
 - **No guarantee of coherence**: That's not a bug, it's a feature
-- **Sonnet.py may phonetically match anyone to a Kardashian**: The crude rhyme-key algorithm once matched "karpathy" → "kardashyan" and we're not apologizing for it. If you input your own name and get matched to a reality TV star, that's not a bug—that's **accidental celebrity phonetic compression**. Somewhere Andrej is either laughing or filing a restraining order against an open-source poetry generator. We're betting on laughter. (If he reads this: Andrej, the sonnets are dedicated to you. Also we're sorry. Also we're not.)  
+- **Sonnet.py may phonetically match anyone to a Kardashian**: The crude rhyme-key algorithm once matched "karpathy" → "kardashyan" and we're not apologizing for it. If you input your own name and get matched to a reality TV star, that's not a bug—that's **accidental celebrity phonetic compression**. Somewhere Andrej is either laughing or filing a restraining order against an open-source AI-artist. We're betting on laughter. (If he reads this: Andrej, the sonnets are dedicated to you. Also we're sorry. Also we're not.)  
 
 
 ### Recent Improvements
