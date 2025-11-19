@@ -445,7 +445,7 @@ Stopwords? Rejected. Single letters? Discarded. What remains are the words that 
 
 #### Act II: The Tree (or "Building the Monster")
 
-Now comes the fun part. For each core word, `sorokin` builds a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner, but technically, here's how:
+Now comes the fun part. For each core word, `sorokin` carefully grows a recursive branching tree of mutations. How? With the calm precision of a med-school dropout who skipped bedside manner, but technically, here's how:
 
 **Step 1: Memory First**  
 Check the SQLite morgue. Have we dissected this word before? Use those cached mutations.
